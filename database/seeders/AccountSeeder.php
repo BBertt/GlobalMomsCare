@@ -6,7 +6,7 @@ use App\Models\Account;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
-
+use Illuminate\Support\Facades\Hash;
 
 class AccountSeeder extends Seeder
 {
@@ -19,7 +19,7 @@ class AccountSeeder extends Seeder
         Account::create([
             'name' => 'Admin',
             'email' => 'Admin@gmail.com',
-            'password' => 'admin',
+            'password' => Hash::make('admin1234'),
             'role' => 'admin',
             'description' => $faker->sentence(),
             'address' => $faker->address(),

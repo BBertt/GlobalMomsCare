@@ -11,6 +11,7 @@ use App\Models\Picture;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
+use Illuminate\Support\Facades\Hash;
 
 class ArticlePictureSeeder extends Seeder
 {
@@ -24,7 +25,7 @@ class ArticlePictureSeeder extends Seeder
         $professional = Account::create([
             'name' => 'Professional',
             'email' => 'Professional@gmail.com',
-            'password' => '123',
+            'password' => Hash::make('12345678'),
             'role' => 'professional',
             'description' => $faker->sentence(),
             'address' => $faker->address(),

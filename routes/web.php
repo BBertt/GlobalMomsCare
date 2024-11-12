@@ -1,10 +1,14 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\ArticleController;
 use Illuminate\Support\Facades\Route;
 
 // Ini functional semua untuk guest[Tanpa akun]
-Route::get('/', function () { return view('home'); })->name('home');
+Route::get('/', function () {
+    return redirect()->route('home');
+});
+Route::get('/home', [ArticleController::class, 'getArticles'])->name('home');
 // Register
 Route::get('/register', [AccountController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [AccountController::class, 'register']);
