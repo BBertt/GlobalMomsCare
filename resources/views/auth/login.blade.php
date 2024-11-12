@@ -8,6 +8,12 @@
 </head>
 <body>
     <div class="max-w-md mx-auto mt-10">
+        @if ($errors->has('login_error'))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                <strong>{{ $errors->first('login_error') }}</strong>
+            </div>
+        @endif
+
         <form method="POST" action="{{ route('login') }}">
             @csrf
             <div>
@@ -20,7 +26,6 @@
                 <input id="password" type="password" name="password" class="w-full p-2 border" required>
             </div>
 
-            <!-- Remember Me Checkbox -->
             <div class="mt-4">
                 <label>
                     <input type="checkbox" name="remember" value="1">

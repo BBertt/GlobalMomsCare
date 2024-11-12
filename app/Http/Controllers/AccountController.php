@@ -51,14 +51,12 @@ class AccountController extends Controller
         $credentials = $request->only('email', 'password');
         $remember = $request->has('remember');
 
-        if (Auth::guard('web')->attempt($credentials, $remember)) {
+        if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
-            return view('home');
+            return redirect()->intended('home');
         }
 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ]);
+        return redirect()->back()->withErrors(['login_error' => 'Wrong Credentials.']);
     }
 
     public function logout(Request $request)
@@ -66,6 +64,6 @@ class AccountController extends Controller
         Auth::guard('web')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return view('home');
+        return redirect()->intended('home');
     }
 }
