@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
-use Illuminate\Container\Attributes\Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -31,7 +31,7 @@ class AccountController extends Controller
             'role' => $request->role,
         ]);
 
-        // Auth::guard('web')->login($account);
+        Auth::login($account);
 
         return redirect()->route('home')->with('success', 'Registration successful!');
     }
