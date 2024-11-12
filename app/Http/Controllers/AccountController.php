@@ -54,7 +54,7 @@ class AccountController extends Controller
 
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
-            return redirect()->intended('home');
+            return redirect()->intended('');
         }
 
         return redirect()->back()->withErrors(['login_error' => 'Wrong Credentials.']);
@@ -65,6 +65,6 @@ class AccountController extends Controller
         Auth::guard('web')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->intended('home');
+        return redirect()->intended('');
     }
 }
