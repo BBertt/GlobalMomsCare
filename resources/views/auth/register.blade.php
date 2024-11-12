@@ -16,7 +16,6 @@
         <form method="POST" action="{{ route('register') }}">
             @csrf
 
-            <!-- Name Input -->
             <div>
                 <label for="name">Name</label>
                 <input id="name" type="text" name="name" value="{{ old('name') }}" class="w-full p-2 border" required>
@@ -25,7 +24,6 @@
                 @enderror
             </div>
 
-            <!-- Email Input -->
             <div class="mt-4">
                 <label for="email">Email</label>
                 <input id="email" type="email" name="email" value="{{ old('email') }}" class="w-full p-2 border" required>
@@ -34,7 +32,6 @@
                 @enderror
             </div>
 
-            <!-- Password Input -->
             <div class="mt-4">
                 <label for="password">Password</label>
                 <input id="password" type="password" name="password" class="w-full p-2 border" required>
@@ -43,7 +40,6 @@
                 @enderror
             </div>
 
-            <!-- Password Confirmation Input -->
             <div class="mt-4">
                 <label for="password_confirmation">Confirm Password</label>
                 <input id="password_confirmation" type="password" name="password_confirmation" class="w-full p-2 border" required>
@@ -52,7 +48,6 @@
                 @enderror
             </div>
 
-            <!-- Role Input -->
             <div class="mt-4">
                 <label for="role">Role</label>
                 <select id="role" name="role" class="w-full p-2 border" required>
@@ -64,7 +59,15 @@
                 @enderror
             </div>
 
-            <!-- Submit Button -->
+            <div class="mt-4">
+                <label>
+                    <input type="checkbox" name="terms" value="1" {{ old('terms') ? 'checked' : '' }}>
+                    I agree to the <a href="#" class="text-blue-500 underline">terms and conditions</a>.
+                </label>
+                @error('terms')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
             <div class="mt-6">
                 <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
                     Register

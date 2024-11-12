@@ -22,6 +22,7 @@ class AccountController extends Controller
             'email' => 'required|string|email|max:255|unique:accounts',
             'password' => 'required|string|confirmed|min:8',
             'role' => 'required|in:user,professional',
+            'terms' => 'accepted',
         ]);
 
         $account = Account::create([
