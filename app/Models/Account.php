@@ -64,4 +64,14 @@ class Account extends Authenticatable
     {
         return $this->belongsToMany(OrderDetail::class, 'account_order_details');
     }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
+
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
+    }
 }
