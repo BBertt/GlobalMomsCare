@@ -10,11 +10,11 @@
     {{-- Load FlowBite --}}
     {{-- <script defer src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" /> --}}
-    {{-- Vite dipakai untuk manual CSS & JS + Auto Reload --}}
     {{-- Load Bootstrap --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
+    {{-- Vite dipakai untuk manual CSS & JS + Auto Reload --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
