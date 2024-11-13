@@ -37,4 +37,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AccountController::class, 'logout'])->name('logout');
     // Routing buat create post [Cuma role "professional" yg bisa access udh di check di home.blade.php]
     Route::get('/articles/new/create', [ArticleController::class, 'create'])->name('articles.new.create');
+    // Buat Article
+    Route::post('/articles/store', [ArticleController::class, 'store'])->name('articles.store');
 });
