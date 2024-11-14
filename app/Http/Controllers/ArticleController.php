@@ -57,9 +57,12 @@ class ArticleController extends Controller
         // Handle image uploads
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                $path = $image->store('public/images');
+                // Store the image using the 'public' disk
+                $path = $image->store('images', 'public'); // Store in storage/app/public/images
+
+                // Save the picture link to the database
                 $picture = Picture::create([
-                    'pictureLink' => $path,
+                    'pictureLink' => $path, // Store only the relative path
                 ]);
 
                 // Attach picture to the article
