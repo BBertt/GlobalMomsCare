@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Picture;
+use App\Models\Category;
 use App\Models\ArticlePicture;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -31,7 +32,8 @@ class ArticleController extends Controller
         if (Auth::check() && Auth::user()->role !== 'professional') {
             return redirect()->route('home');
         }
-        return view('article.create');
+        $categories = Category::all();
+        return view('article.create', compact('categories'));
     }
 
     public function show($id){
@@ -44,6 +46,8 @@ class ArticleController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required',
+            'categories' => 'required|array',
+            'categories.*' => 'exists:categories,id',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
@@ -53,6 +57,10 @@ class ArticleController extends Controller
             'title' => $request->title,
             'content' => $request->content,
         ]);
+
+        if ($request->has('categories')) {
+            $article->categories()->attach($request->categories);
+        }
 
         // Handle image uploads
         if ($request->hasFile('images')) {

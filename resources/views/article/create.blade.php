@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Home')
+@section('title', 'Create Article')
 
 @section('content')
 <div class="container mx-auto p-6">
@@ -25,6 +25,21 @@
         <div class="mb-4">
             <label for="content" class="block text-gray-700">Content</label>
             <textarea name="content" id="content" rows="5" class="w-full p-3 border rounded" required></textarea>
+        </div>
+
+        <!-- Category Selection -->
+        <div class="mb-4">
+            <label for="categories" class="block text-gray-700">Select Categories</label>
+            <div class="flex flex-wrap">
+                @foreach($categories as $category)
+                    <div class="mr-4 mb-2">
+                        <label class="inline-flex items-center">
+                            <input type="checkbox" name="categories[]" value="{{ $category->id }}" class="form-checkbox text-blue-500">
+                            <span class="ml-2">{{ $category->name }}</span>
+                        </label>
+                    </div>
+                @endforeach
+            </div>
         </div>
 
         <!-- Image Upload -->

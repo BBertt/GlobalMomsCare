@@ -43,16 +43,7 @@ class ArticlePictureSeeder extends Seeder
             ]);
 
             ArticleCategory::create([
-                'categories_id' => $category->id,
-                'article_id' => $article->id,
-            ]);
-
-            $picture = Picture::create([
-                'pictureLink' => 'default.jpg',
-            ]);
-
-            ArticlePicture::create([
-                'picture_id' => $picture->id,
+                'category_id' => $category->id,
                 'article_id' => $article->id,
             ]);
         }

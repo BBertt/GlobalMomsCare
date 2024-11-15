@@ -24,7 +24,14 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         @forelse($articles as $article)
         <div class="card bg-white shadow-lg rounded-lg overflow-hidden flex flex-col">
-            <img src="{{ asset('images/default.jpg') }}" alt="{{ $article->title }}" class="w-full h-48 object-cover">
+            @php
+
+            @endphp
+            @if ($article->pictures->isNotEmpty())
+                <img src="{{ asset('storage/' . $article->pictures->first()->pictureLink) }}" alt="{{ $article->title }}" class="w-full h-48 object-cover">
+            @else
+                <img src="{{ asset('images/default.jpg') }}" alt="{{ $article->title }}" class="w-full h-48 object-cover">
+            @endif
             <div class="flex flex-col justify-between flex-1 p-6">
                 <div>
                     <h5 class="text-xl font-bold text-red-600 mb-4">{{ Str::words($article->title, 5) }}</h5>
