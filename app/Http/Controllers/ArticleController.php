@@ -13,20 +13,31 @@ class ArticleController extends Controller
 {
     public function getArticles() {
         $articles = Article::all();
+        $categories = Category::all();
 
-        return view('home', compact('articles'));
+        return view('home', compact('articles', 'categories'));
     }
 
     public function index(Request $request)
     {
         $search = $request->input('search');
+        $categories = $request->input('categories');
 
         $articles = Article::when($search, function ($query, $search) {
-            return $query->where('title', 'like', '%' . $search . '%');
-        })->get();
+                return $query->where('title', 'like', '%' . $search . '%');
+            })
+            ->when($categories, function ($query, $categories) {
+                return $query->whereHas('categories', function ($categoryQuery) use ($categories) {
+                    $categoryQuery->whereIn('categories.id', $categories);
+                });
+            })
+            ->get();
 
-        return view('home', compact('articles'));
+        $categories = Category::all();
+
+        return view('home', compact('articles', 'categories'));
     }
+
 
     public function create(){
         if (Auth::check() && Auth::user()->role !== 'professional') {

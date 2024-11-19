@@ -13,7 +13,7 @@
                     <a class="nav-link text-dark fw-semibold mr-3" href="/">Articles</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark fw-semibold mr-3" href="#">Forums</a>
+                    <a class="nav-link text-dark fw-semibold mr-3" href="/forums">Forums</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-dark fw-semibold mr-3" href="#">Products</a>

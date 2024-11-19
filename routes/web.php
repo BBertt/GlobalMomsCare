@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ForumController;
 use Illuminate\Support\Facades\Route;
 
 // =============================
@@ -17,6 +18,8 @@ Route::get('/home', [ArticleController::class, 'getArticles'])->name('home');
 Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
 // Routing Buat Read More [Detail Articles]
 Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('articles.show');
+// Page Forums
+Route::get('/forums', [ForumController::class, 'index'])->name('forum.show');
 
 // ==================================
 // INI ROUTING GUESS [GA PUNYA AKUN]
