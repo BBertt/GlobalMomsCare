@@ -18,7 +18,7 @@ Route::get('/home', [ArticleController::class, 'getArticles'])->name('home');
 Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
 // Routing Buat Read More [Detail Articles]
 Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('articles.show');
-// Page Forums
+// Routing Buat Ke Page Forums
 Route::get('/forums', [ForumController::class, 'index'])->name('forum.show');
 
 // ==================================
