@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\Route;
 
 // =============================
@@ -39,4 +40,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/articles/new/create', [ArticleController::class, 'create'])->name('articles.new.create');
     // Buat Article
     Route::post('/articles/store', [ArticleController::class, 'store'])->name('articles.store');
+    // Get Chat
+    Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
+    // Send Chat
+    Route::post('/chat', [ChatController::class, 'store'])->name('chat.store');
 });

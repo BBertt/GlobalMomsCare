@@ -3,8 +3,8 @@
 @section('title', 'Create Article')
 
 @section('content')
-<div class="container mx-auto p-6">
-    <h2 class="text-2xl font-bold mb-6">Create a New Article</h2>
+<div class="container p-8">
+    <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">Create a New Article</h2>
 
     @if(session('success'))
         <div class="bg-green-100 text-green-800 p-4 rounded mb-6">
@@ -12,116 +12,96 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('articles.store') }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('articles.store') }}" enctype="multipart/form-data" class="space-y-8">
         @csrf
 
-        <!-- Title Input -->
-        <div class="mb-4">
-            <label for="title" class="block text-gray-700">Title</label>
-            <input type="text" name="title" id="title" class="w-full p-3 border rounded" required>
-        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Column -->
+            <div>
+                <!-- Image Upload -->
+                <div class="mb-6">
+                    <label for="images" class="block text-lg font-medium text-gray-700 mb-2">Upload Images</label>
+                    <input type="file" id="imageInput" name="images[]" multiple class="w-full p-3 border rounded-lg shadow-sm" accept="image/*">
+                    <div id="previewContainer" class="flex flex-wrap gap-4 pt-3"></div>
+                </div>
 
-        <!-- Content Input -->
-        <div class="mb-4">
-            <label for="content" class="block text-gray-700">Content</label>
-            <textarea name="content" id="content" rows="5" class="w-full p-3 border rounded" required></textarea>
-        </div>
-
-        <!-- Category Selection -->
-        <div class="mb-4">
-            <label for="categories" class="block text-gray-700">Select Categories</label>
-            <div class="flex flex-wrap">
-                @foreach($categories as $category)
-                    <div class="mr-4 mb-2">
-                        <label class="inline-flex items-center">
-                            <input type="checkbox" name="categories[]" value="{{ $category->id }}" class="form-checkbox text-blue-500">
-                            <span class="ml-2">{{ $category->name }}</span>
-                        </label>
+                <!-- Category Selection -->
+                <div>
+                    <label for="categories" class="block text-lg font-medium text-gray-700 mb-2">Select Categories</label>
+                    <div class="p-4 border rounded-lg bg-white shadow-sm max-h-80 overflow-y-auto">
+                        @foreach($categories as $category)
+                            <div class="flex items-center mb-3">
+                                <input type="checkbox" id="category{{ $category->id }}" name="categories[]" value="{{ $category->id }}" class="form-checkbox h-4 w-4 text-blue-500">
+                                <label for="category{{ $category->id }}" class="ml-2 text-gray-700">{{ $category->name }}</label>
+                            </div>
+                        @endforeach
                     </div>
-                @endforeach
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-span-2">
+                <!-- Title Input -->
+                <div class="mb-6">
+                    <label for="title" class="block text-lg font-medium text-gray-700 mb-2">Title</label>
+                    <input type="text" name="title" id="title" class="w-full p-3 border rounded-lg shadow-sm" placeholder="Enter the article title" required>
+                </div>
+
+                <!-- Content Input -->
+                <div class="pt-4 h-auto">
+                    <label for="content" class="block text-lg font-medium text-gray-700 mb-2">Content</label>
+                    <textarea name="content" id="content" rows="8" class="w-full p-3 border rounded-lg shadow-sm" placeholder="Write your article here..." required></textarea>
+                </div>
             </div>
         </div>
 
-        <!-- Image Upload -->
-        <div class="mb-4">
-            <label for="images" class="block text-gray-700">Upload Images</label>
-            <input type="file" id="imageInput" name="images[]" multiple class="w-full p-3 border rounded" accept="image/*">
+        <div class="text-center">
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-lg shadow-lg text-lg">
+                Submit
+            </button>
         </div>
-
-        <div id="previewContainer" class="flex flex-wrap gap-4"></div>
-
-        <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded">Submit</button>
     </form>
 </div>
+
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const imageInput = document.getElementById('imageInput');
         const previewContainer = document.getElementById('previewContainer');
-
-        let selectedFiles = [];
-
-        // Handle image input change event
-        imageInput.addEventListener('change', function (event) {
-            const files = Array.from(event.target.files);
-
-            files.forEach((file) => {
-                // Check if file is an image
-                if (!file.type.startsWith('image/')) return;
-
-                // Add the file to the selected files array
-                selectedFiles.push(file);
-
-                // Create a FileReader to read the image
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const preview = document.createElement('div');
-                    preview.className = 'relative';
-                    preview.innerHTML = `
-                        <img src="${e.target.result}" alt="Preview" class="w-32 h-32 object-cover rounded-lg shadow">
-                        <button type="button" class="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1" onclick="removeImage(${selectedFiles.length - 1})">X</button>
-                    `;
-                    previewContainer.appendChild(preview);
-                };
-                reader.readAsDataURL(file);
-            });
-
-            // Clear the original input so the user can select the same file again
-            imageInput.value = '';
-        });
-
-        // Function to remove an image preview and update the selected files array
-        function removeImage(index) {
-            selectedFiles.splice(index, 1);
-            renderPreviews();
-        }
-
-        // Function to re-render all previews
-        function renderPreviews() {
+        imageInput.addEventListener('change', function () {
+            const files = Array.from(imageInput.files);
             previewContainer.innerHTML = '';
-            selectedFiles.forEach((file, index) => {
+
+            files.forEach(file => {
                 const reader = new FileReader();
+
                 reader.onload = function (e) {
                     const preview = document.createElement('div');
                     preview.className = 'relative';
                     preview.innerHTML = `
-                        <img src="${e.target.result}" alt="Preview" class="w-32 h-32 object-cover rounded-lg shadow">
-                        <button type="button" class="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1" onclick="removeImage(${index})">X</button>
+                        <img src="${e.target.result}" alt="Preview" class="w-24 h-24 object-cover rounded-lg shadow">
+                        <button type="button" class="w-8 h-8 absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-700">X</button>
                     `;
                     previewContainer.appendChild(preview);
+                    preview.querySelector('button').addEventListener('click', function () {
+                        removeFile(file);
+                        previewContainer.removeChild(preview);
+                    });
                 };
+
                 reader.readAsDataURL(file);
             });
-        }
+        });
+        function removeFile(fileToRemove) {
+            const files = Array.from(imageInput.files).filter(file => file !== fileToRemove);
 
-        // Handle form submission
-        document.querySelector('form').addEventListener('submit', function (event) {
             const dataTransfer = new DataTransfer();
+            files.forEach(file => dataTransfer.items.add(file));
 
-            // Add all selected files to the DataTransfer object
-            selectedFiles.forEach(file => dataTransfer.items.add(file));
-
-            // Assign the updated file list back to the original input
             imageInput.files = dataTransfer.files;
+        }
+        document.querySelector('form').addEventListener('submit', function () {
+            console.log("Submitting with files: ", imageInput.files);
         });
     });
 </script>
