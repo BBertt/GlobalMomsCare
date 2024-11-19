@@ -29,6 +29,10 @@ class ArticleController extends Controller
             ->when($categories, function ($query, $categories) {
                 return $query->whereHas('categories', function ($categoryQuery) use ($categories) {
                     $categoryQuery->whereIn('categories.id', $categories);
+                })
+                ->whereHas('categories', function ($countQuery) use ($categories) {
+                    $countQuery->selectRaw('COUNT(*)')
+                        ->havingRaw('COUNT(*) = ?', [count($categories)]);
                 });
             })
             ->get();
@@ -37,7 +41,6 @@ class ArticleController extends Controller
 
         return view('home', compact('articles', 'categories'));
     }
-
 
     public function create(){
         if (Auth::check() && Auth::user()->role !== 'professional') {
@@ -62,7 +65,6 @@ class ArticleController extends Controller
             'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-        // Save the article
         $article = Article::create([
             'account_id' => Auth::id(),
             'title' => $request->title,
@@ -73,18 +75,13 @@ class ArticleController extends Controller
             $article->categories()->attach($request->categories);
         }
 
-        // Handle image uploads
+
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                // Store the image using the 'public' disk
-                $path = $image->store('images', 'public'); // Store in storage/app/public/images
-
-                // Save the picture link to the database
+                $path = $image->store('images', 'public');
                 $picture = Picture::create([
-                    'pictureLink' => $path, // Store only the relative path
+                    'pictureLink' => $path,
                 ]);
-
-                // Attach picture to the article
                 $article->pictures()->attach($picture->id);
             }
         }
