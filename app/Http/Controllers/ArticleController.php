@@ -86,6 +86,6 @@ class ArticleController extends Controller
             }
         }
 
-        return redirect()->route('home')->with('success', 'Article created successfully!');
+        return redirect()->route('home');
     }
 }

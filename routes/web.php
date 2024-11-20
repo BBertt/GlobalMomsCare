@@ -45,6 +45,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/articles/store', [ArticleController::class, 'store'])->name('articles.store');
     // Routing Untuk Create Forum
     Route::get('/forums/new/create', [ForumController::class, 'create'])->name('forums.new.create');
+    // Buat Forum
+    Route::post('/articles/store', [ForumController::class, 'store'])->name('forums.store');
     // Get Chat
     Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
     // Send Chat
