@@ -14,12 +14,15 @@ Route::get('/', function () {
     return redirect()->route('home');
 });
 Route::get('/home', [ArticleController::class, 'getArticles'])->name('home');
-// Routing Search Di Home
+// Routing Search Bar + Kategory Di Home
 Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
 // Routing Buat Read More [Detail Articles]
 Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('articles.show');
+
 // Routing Buat Ke Page Forums
-Route::get('/forums', [ForumController::class, 'index'])->name('forum.show');
+Route::get('/forums', [ForumController::class, 'index'])->name('forums.index');
+// Routing Search Bar + Kategory Di Forum
+Route::get('/forums/search', [ForumController::class, 'search'])->name('forums.search');
 
 // ==================================
 // INI ROUTING GUESS [GA PUNYA AKUN]

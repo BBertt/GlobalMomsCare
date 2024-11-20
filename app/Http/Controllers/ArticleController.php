@@ -24,18 +24,14 @@ class ArticleController extends Controller
         $categories = $request->input('categories');
 
         $articles = Article::when($search, function ($query, $search) {
-                return $query->where('title', 'like', '%' . $search . '%');
-            })
-            ->when($categories, function ($query, $categories) {
-                return $query->whereHas('categories', function ($categoryQuery) use ($categories) {
-                    $categoryQuery->whereIn('categories.id', $categories);
-                })
-                ->whereHas('categories', function ($countQuery) use ($categories) {
-                    $countQuery->selectRaw('COUNT(*)')
-                        ->havingRaw('COUNT(*) = ?', [count($categories)]);
-                });
-            })
-            ->get();
+            return $query->where('title', 'like', '%' . $search . '%');
+        })
+        ->when($categories, function ($query, $categories) {
+            return $query->whereHas('categories', function ($categoryQuery) use ($categories) {
+                $categoryQuery->whereIn('categories.id', $categories);
+            }, '=', count($categories));
+        })
+        ->get();
 
         $categories = Category::all();
 

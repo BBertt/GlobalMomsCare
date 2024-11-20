@@ -58,4 +58,25 @@ class ForumController extends Controller
 
         return redirect()->route('forum.show');
     }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $categories = $request->input('categories');
+
+        $forums = Forum::when($search, function ($query, $search) {
+            return $query->where('title', 'like', '%' . $search . '%');
+        })
+        ->when($categories, function ($query, $categories) {
+            return $query->whereHas('categories', function ($categoryQuery) use ($categories) {
+                $categoryQuery->whereIn('categories.id', $categories);
+            }, '=', count($categories));
+        })
+        ->get();
+
+
+        $categories = Category::all();
+
+        return view('forum.forum', compact('categories', 'forums'));
+    }
 }
