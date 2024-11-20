@@ -57,7 +57,11 @@
         @endif
     </div>
 
-
+    <div>
+        @foreach ($forums as $forum)
+            <h1>{{ $forum->title }}</h1>
+        @endforeach
+    </div>
 
 </div>
 <script>
