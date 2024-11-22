@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('account_id')->constrained('accounts')->onDelete('cascade');
             $table->string('title');
             $table->text('content');
-            $table->integer('freqAsk')->default(0);
             $table->timestamps();
         });
     }

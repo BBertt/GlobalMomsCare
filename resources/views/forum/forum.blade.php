@@ -58,37 +58,25 @@
     </div>
 
     <div class="container mx-auto ">
-        <!-- Loop through forums -->
         @foreach ($forums as $forum)
-            <div class="bg-white shadow-md rounded-lg mb-6 p-4 flex flex-col md:flex-row items-start md:items-center">
-                <!-- Post Picture -->
-                <div class="w-full md:w-1/6">
-                    @if($forum->pictures->isNotEmpty())
-                        <img src="{{ asset('storage/' . $forum->pictures->first()->pictureLink) }}" alt="{{ $forum->title }}" class="w-48 h-32 object-cover rounded">
-                    @else
-                        <div class="bg-gray-200 w-full h-32 flex items-center justify-center rounded">
-                            <span class="text-gray-500">No Image</span>
-                        </div>
-                    @endif
-                </div>
-
-                <!-- Post Details -->
-                <div class="flex-1 ml-4">
-                    <!-- Post Title -->
-                    <h2 class="text-xl font-bold text-gray-800">{{ $forum->title }}</h2>
-                    <!-- Post Content Preview -->
-                    <p class="text-gray-600 mt-2">{{ Str::limit($forum->content, 150, '...') }}</p>
-
-                    <!-- Post Stats -->
-                    <div class="mt-4 flex items-center space-x-4 text-gray-600">
-                        <div class="flex items-center">
-                            <i class="fas fa-arrow-up text-red-500 mr-1"></i>
-                            <span>{{ $forum->freqAsk }}</span>
-                        </div>
-                        {{-- <a href="{{ route('forums.show', $forum->id) }}" class="text-blue-500 hover:underline">Read More</a> --}}
+            <a href="{{ route('forums.show', $forum->id) }}" class="no-underline">
+                <div class="bg-gray-50 shadow-md rounded-lg mb-6 p-4 flex flex-col md:flex-row items-start md:items-center hover:bg-gray-200">
+                    <div class="w-full md:w-1/6">
+                        @if($forum->pictures->isNotEmpty())
+                            <img src="{{ asset('storage/' . $forum->pictures->first()->pictureLink) }}" alt="{{ $forum->title }}" class="w-48 h-32 object-cover rounded">
+                        @else
+                            <div class="bg-gray-200 w-full h-32 flex items-center justify-center rounded">
+                                <span class="text-gray-500">No Image</span>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="flex-1 ml-4">
+                        <h2 class="text-xl font-bold text-gray-800 mb-0">{{ $forum->title }}</h2>
+                        <h6 class="text-sm font-semibold text-gray-500">By {{ $forum->account->name }}</h6>
+                        <p class="text-gray-600 mt-2">{{ Str::limit($forum->content, 150, '...') }}</p>
                     </div>
                 </div>
-            </div>
+            </a>
         @endforeach
     </div>
 

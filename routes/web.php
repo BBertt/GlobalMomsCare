@@ -19,10 +19,12 @@ Route::get('/articles', [ArticleController::class, 'index'])->name('articles.ind
 // Routing Buat Read More [Detail Articles]
 Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('articles.show');
 
-// Routing Buat Ke Page Forums
+// Routing Buat Ke Page ==== FORUMS ====
 Route::get('/forums', [ForumController::class, 'index'])->name('forums.index');
-// Routing Search Bar + Kategory Di Forum
+// Routing Search Bar + Kategory Di  ==== FORUM ====
 Route::get('/forums/search', [ForumController::class, 'search'])->name('forums.search');
+// Routing Buat Read More [Detail ==== FORUM ====]
+Route::get('/forums/detail/{id}', [ForumController::class, 'show'])->name('forums.show');
 
 // ==================================
 // INI ROUTING GUESS [GA PUNYA AKUN]
@@ -42,13 +44,13 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     // Logout
     Route::post('/logout', [AccountController::class, 'logout'])->name('logout');
-    // Routing buat create post [Cuma role "professional" yg bisa access udh di check di home.blade.php]
+    // Routing buat create Article [Cuma role "professional" yg bisa access udh di check di home.blade.php]
     Route::get('/articles/new/create', [ArticleController::class, 'create'])->name('articles.new.create');
-    // Buat Article
+    // Simpen Article yang baru dibuat
     Route::post('/articles/store', [ArticleController::class, 'store'])->name('articles.store');
     // Routing Untuk Create Forum
     Route::get('/forums/new/create', [ForumController::class, 'create'])->name('forums.new.create');
-    // Buat Forum
+    // Simpen Forum yang baru dibuat
     Route::post('/forums/store', [ForumController::class, 'store'])->name('forums.store');
     // Get Chat
     Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');

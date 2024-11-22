@@ -56,7 +56,7 @@ class ForumController extends Controller
             }
         }
 
-        return redirect()->route('forum.show');
+        return redirect()->route('forums.index');
     }
 
     public function search(Request $request)
@@ -78,5 +78,10 @@ class ForumController extends Controller
         $categories = Category::all();
 
         return view('forum.forum', compact('categories', 'forums'));
+    }
+
+    public function show($id){
+        $forum = Forum::with(['comments', 'pictures', 'account'])->findOrFail($id);
+        return view('forum.detail', compact('forum'));
     }
 }
