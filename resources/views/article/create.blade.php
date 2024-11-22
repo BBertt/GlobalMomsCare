@@ -16,16 +16,13 @@
         @csrf
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Left Column -->
             <div>
-                <!-- Image Upload -->
                 <div class="mb-6">
                     <label for="images" class="block text-lg font-medium text-gray-700 mb-2">Upload Images</label>
                     <input type="file" id="imageInput" name="images[]" multiple class="w-full p-3 border rounded-lg shadow-sm" accept="image/*">
                     <div id="previewContainer" class="flex flex-wrap gap-4 pt-3"></div>
                 </div>
 
-                <!-- Category Selection -->
                 <div>
                     <label for="categories" class="block text-lg font-medium text-gray-700 mb-2">Select Categories</label>
                     <div class="p-4 border rounded-lg bg-white shadow-sm max-h-80 overflow-y-auto">
@@ -39,15 +36,12 @@
                 </div>
             </div>
 
-            <!-- Right Column -->
             <div class="col-span-2">
-                <!-- Title Input -->
                 <div class="mb-6">
                     <label for="title" class="block text-lg font-medium text-gray-700 mb-2">Title</label>
                     <input type="text" name="title" id="title" class="w-full p-3 border rounded-lg shadow-sm" placeholder="Enter the article title" required>
                 </div>
 
-                <!-- Content Input -->
                 <div class="pt-4 h-auto">
                     <label for="content" class="block text-lg font-medium text-gray-700 mb-2">Content</label>
                     <textarea name="content" id="content" rows="8" class="w-full p-3 border rounded-lg shadow-sm" placeholder="Write your article here..." required></textarea>

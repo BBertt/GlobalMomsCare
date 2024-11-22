@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ForumController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,14 +45,22 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     // Logout
     Route::post('/logout', [AccountController::class, 'logout'])->name('logout');
+
     // Routing buat create Article [Cuma role "professional" yg bisa access udh di check di home.blade.php]
     Route::get('/articles/new/create', [ArticleController::class, 'create'])->name('articles.new.create');
     // Simpen Article yang baru dibuat
     Route::post('/articles/store', [ArticleController::class, 'store'])->name('articles.store');
+
     // Routing Untuk Create Forum
     Route::get('/forums/new/create', [ForumController::class, 'create'])->name('forums.new.create');
     // Simpen Forum yang baru dibuat
     Route::post('/forums/store', [ForumController::class, 'store'])->name('forums.store');
+
+    // Simpen Comment
+    Route::post('/comment/store/{id}', [CommentController::class, 'store'])->name('comment.store');
+    // Delete Comment
+    Route::post('/comment/delete/{id}/{forumid}', [CommentController::class, 'delete'])->name('comment.delete');
+
     // Get Chat
     Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
     // Send Chat
