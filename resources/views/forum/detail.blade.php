@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Forum')
+@section('title', $forum->title)
 
 @section('content')
     {{ $forum->title }} <br>

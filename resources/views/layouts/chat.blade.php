@@ -3,7 +3,7 @@
     <div id="chat-header" class="bg-red-500 text-white p-3 flex justify-between items-center cursor-pointer">
         <span class="font-bold">Chat</span>
         <button id="chat-minimize" class="text-white hover:text-gray-200">
-            <i id="toggle-icon" class="fas fa-minus"></i>
+            <i id="toggle-icon" class="fas fa-plus"></i>
         </button>
     </div>
 

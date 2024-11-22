@@ -7,10 +7,10 @@ document.addEventListener("DOMContentLoaded", function () {
     chatHeader.addEventListener("click", function () {
         if (chatBody.classList.contains("hidden")) {
             chatBody.classList.remove("hidden");
-            toggleIcon.classList.replace("fa-minus", "fa-times");
+            toggleIcon.classList.replace("fa-plus", "fa-times");
         } else {
             chatBody.classList.add("hidden");
-            toggleIcon.classList.replace("fa-times", "fa-minus");
+            toggleIcon.classList.replace("fa-times", "fa-plus");
         }
     });
 });
