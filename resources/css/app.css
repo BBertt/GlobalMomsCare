@@ -79,3 +79,14 @@ main {
 #content {
     min-height: 315px;
 }
+
+.toggle-section {
+    display: none; /* Hidden by default */
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.toggle-section.active {
+    display: block; /* Make it visible */
+    opacity: 1; /* Fully opaque */
+}

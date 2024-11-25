@@ -84,4 +84,43 @@ class ArticleController extends Controller
 
         return redirect()->route('home');
     }
+
+    public function delete($id){
+        $article = Article::findOrFail($id);
+        $article->delete();
+        return redirect()->route('profile.show');
+    }
+
+    public function updatePage($id){
+        $article = Article::findOrFail($id);
+        $categories = Category::all();
+        return view('article.update', compact('article', 'categories'));
+    }
+
+    public function update(Request $request, $id){
+        $article = Article::findOrFail($id);
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required',
+            'categories' => 'required|array',
+            'categories.*' => 'exists:categories,id',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+        $article->update($validated);
+
+        $article->categories()->sync($request->categories);
+
+        // Handle new images if provided
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('images', 'public');
+                $picture = Picture::create([
+                    'pictureLink' => $path,
+                ]);
+                $article->pictures()->attach($picture->id);
+            }
+        }
+
+        return redirect()->route('profile.show');
+    }
 }

@@ -50,16 +50,30 @@ Route::middleware('auth')->group(function () {
     Route::get('/articles/new/create', [ArticleController::class, 'create'])->name('articles.new.create');
     // Simpen Article yang baru dibuat
     Route::post('/articles/store', [ArticleController::class, 'store'])->name('articles.store');
+    // Delete Article
+    Route::delete('/articles/delete/{id}', [ArticleController::class, 'delete'])->name('articles.delete');
+    // Pindah Ke Update Article Page
+    Route::get('/article/update/{id}', [ArticleController::class, 'updatePage'])->name('articles.update.page');
+    // Simpen Article yang udh di Update
+    Route::put('/article/update/store/{id}', [ArticleController::class, 'update'])->name('articles.update');
 
     // Routing Untuk Create Forum
     Route::get('/forums/new/create', [ForumController::class, 'create'])->name('forums.new.create');
     // Simpen Forum yang baru dibuat
     Route::post('/forums/store', [ForumController::class, 'store'])->name('forums.store');
+    // Delete Forums
+    Route::delete('/forums/delete/{id}', [ForumController::class, 'delete'])->name('forums.delete');
+    // Pindah ke Update Forum Page
+    Route::get('/forums/update/{id}', [ForumController::class, 'updatePage'])->name('forums.update.page');
+    // Simpen Forum yang di Update
+    Route::put('/forums/update/store/{id}', [ForumController::class, 'update'])->name('forums.update');
 
     // Simpen Comment
     Route::post('/comment/store/{id}', [CommentController::class, 'store'])->name('comment.store');
-    // Delete Comment
+    // Delete Comment [Dari Page Forumnya]
     Route::post('/comment/delete/{id}/{forumid}', [CommentController::class, 'delete'])->name('comment.delete');
+    // Delete Comment [Dari Page Profile]
+    Route::post('/comment/delete/{id}', [CommentController::class, 'deleteBackProfile'])->name('comment.delete.profile');
 
     //Open Profile Page
     Route::get('/profile' ,[AccountController::class, 'profile'])->name('profile.show');
@@ -69,3 +83,13 @@ Route::middleware('auth')->group(function () {
     // Send Chat
     Route::post('/chat', [ChatController::class, 'store'])->name('chat.store');
 });
+
+
+// CATATAN
+// Klo mau pake DELETE method Example: Route::delete
+// Di form harus ada "@method('DELETE')
+// Note: Klo mau pake post biasa juga ttp jalan
+
+// Klo mau pake PUT (Buat Update) method Example: Route::put
+// Di form harus ada "@method('PUT')
+// Note: Klo mau pake post biasa juga ttp jalan

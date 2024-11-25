@@ -84,4 +84,43 @@ class ForumController extends Controller
         $forum = Forum::with(['comments', 'pictures', 'account'])->findOrFail($id);
         return view('forum.detail', compact('forum'));
     }
+
+    public function delete($id){
+        $forum = Forum::findOrFail($id);
+        $forum->delete();
+        return redirect()->route('profile.show');
+    }
+
+    public function updatePage($id){
+        $forum = Forum::findOrFail($id);
+        $categories = Category::all();
+        return view('forum.update', compact('forum', 'categories'));
+    }
+
+    public function update(Request $request, $id){
+        $forum = Forum::findOrFail($id);
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required',
+            'categories' => 'required|array',
+            'categories.*' => 'exists:categories,id',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+        $forum->update($validated);
+
+        $forum->categories()->sync($request->categories);
+
+        // Handle new images if provided
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('images', 'public');
+                $picture = Picture::create([
+                    'pictureLink' => $path,
+                ]);
+                $forum->pictures()->attach($picture->id);
+            }
+        }
+
+        return redirect()->route('profile.show');
+    }
 }

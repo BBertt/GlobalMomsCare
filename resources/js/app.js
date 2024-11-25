@@ -1,3 +1,4 @@
+// Open Close Chat Seqment
 document.addEventListener("DOMContentLoaded", function () {
     const chatContainer = document.getElementById("chat-container");
     const chatHeader = document.getElementById("chat-header");

@@ -29,4 +29,10 @@ class CommentController extends Controller
         return redirect()->route('forums.show', $forumid);
     }
 
+    public function deleteBackProfile($id){
+        $comment=Comment::findOrFail($id);
+        $comment->delete();
+        return redirect()->route('profile.show');
+    }
+
 }
