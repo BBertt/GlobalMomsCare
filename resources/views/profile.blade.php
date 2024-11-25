@@ -4,7 +4,13 @@
 
 @section('content')
     <div class="container">
-        <h1>{{ $user->name }}</h1>
+        <h1 class="font-extrabold text-4xl mt-9 mb-0">{{ $user->name }}</h1>
+        <p class="mb-0">{{ $user->email }}</p>
+        @if ($user->description != null)
+            <p>{{ $user->description }}</p>
+        @else
+            <p>No description</p>
+        @endif
 
         {{-- Button Group --}}
         <div class="btn-group mb-4 flex" role="group" aria-label="Profile Toggle Button Group">
@@ -54,21 +60,23 @@
                                 <h5 class="text-xl font-bold text-red-600 mb-4">{{ Str::words($article->title, 5) }}</h5>
                                 <p class="text-gray-700 mb-6">{{ Str::words($article->content, 20) }}</p>
                             </div>
-                            <a href="{{ route('articles.show', $article->id) }}" class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded transition duration-300 self-start inline-block" style="text-decoration: none;">
-                                Learn More
-                            </a>
-                            <form method="POST" action="{{ route('articles.delete', $article->id) }}" onsubmit="return confirm('Are you sure you want to delete this article?')" class="mt-2">
-                                @csrf
-                                @method('DELETE')
-                                <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
-                                    Delete
-                                </button>
-                            </form>
-                            <a href="/article/update/{{ $article->id }}">
-                                <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
-                                    Update
-                                </button>
-                            </a>
+                            <div class="flex justify-center items-center gap-2">
+                                <a href="{{ route('articles.show', $article->id) }}" class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded transition duration-300 self-start" style="text-decoration: none;">
+                                    Learn More
+                                </a>
+                                <a href="/article/update/{{ $article->id }}">
+                                    <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
+                                        Update
+                                    </button>
+                                </a>
+                                <form method="POST" action="{{ route('articles.delete', $article->id) }}" onsubmit="return confirm('Are you sure you want to delete this article?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                     @empty
@@ -86,38 +94,36 @@
         @endif
             <h3>Forums</h3>
             @foreach ($forums as $forum)
-                <a href="{{ route('forums.show', $forum->id) }}" class="no-underline">
-                    <div class="bg-gray-50 shadow-md rounded-lg mb-6 p-4 flex flex-col md:flex-row items-start md:items-center hover:bg-gray-200">
-                        <div class="w-full md:w-1/6">
-                            @if($forum->pictures->isNotEmpty())
-                                <img src="{{ asset('storage/' . $forum->pictures->first()->pictureLink) }}" alt="{{ $forum->title }}" class="w-48 h-32 object-cover rounded">
-                            @else
-                                <div class="bg-gray-200 w-full h-32 flex items-center justify-center rounded">
-                                    <span class="text-gray-500">No Image</span>
-                                </div>
-                            @endif
-                        </div>
-                        <div class="flex-1 ml-4">
-                            <h2 class="text-xl font-bold text-gray-800 mb-0">{{ $forum->title }}</h2>
-                            <h6 class="text-sm font-semibold text-gray-500">By {{ $forum->account->name }}</h6>
-                            <p class="text-gray-600 mt-2">{{ Str::limit($forum->content, 150, '...') }}</p>
-                        </div>
-                        <div>
-                            <form method="POST" action="{{ route('forums.delete', $forum->id) }}" onsubmit="return confirm('Are you sure you want to delete this forum?')" class="mt-2">
+                <div class="bg-gray-50 shadow-md rounded-lg mb-6 p-4 flex flex-col md:flex-row items-start md:items-center hover:bg-gray-200">
+                    <div class="w-full md:w-1/6 flex-shrink-0">
+                        @if($forum->pictures && $forum->pictures->isNotEmpty())
+                            <img src="{{ asset('storage/' . $forum->pictures->first()->pictureLink) }}" alt="{{ $forum->title }}" class="w-48 h-32 object-cover rounded">
+                        @else
+                            <div class="bg-gray-200 w-48 h-32 flex items-center justify-center rounded">
+                                <span class="text-gray-500">No Image</span>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="flex-1 ml-4">
+                        <h2 class="text-xl font-bold text-gray-800 mb-0">{{ $forum->title }}</h2>
+                        <h6 class="text-sm font-semibold text-gray-500">By {{ $forum->account->name }}</h6>
+                        <p class="text-gray-600 mt-2">{{ Str::limit($forum->content, 150, '...') }}</p>
+                        <div class="flex justify-start items-center gap-3 mt-3">
+                            <form method="POST" action="{{ route('forums.delete', $forum->id) }}" onsubmit="return confirm('Are you sure you want to delete this forum?')">
                                 @csrf
                                 @method('DELETE')
                                 <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
                                     Delete
                                 </button>
                             </form>
-                            <a href="/forums/update/{{ $forum->id }}">
+                            <a href="/forums/update/{{ $forum->id }}" class="inline-block">
                                 <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
                                     Update
                                 </button>
                             </a>
                         </div>
                     </div>
-                </a>
+                </div>
             @endforeach
         </div>
 
