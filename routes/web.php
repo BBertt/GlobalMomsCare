@@ -61,6 +61,9 @@ Route::middleware('auth')->group(function () {
     // Delete Comment
     Route::post('/comment/delete/{id}/{forumid}', [CommentController::class, 'delete'])->name('comment.delete');
 
+    //Open Profile Page
+    Route::get('/profile' ,[AccountController::class, 'profile'])->name('profile.show');
+
     // Get Chat
     Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
     // Send Chat

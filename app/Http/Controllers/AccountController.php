@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
+use App\Models\Article;
+use App\Models\Comment;
+use App\Models\Forum;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -66,5 +69,14 @@ class AccountController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()->intended('');
+    }
+
+    public function profile(){
+        $id = Auth::id();
+        $user = Auth::user();
+        $articles = Article::where('account_id', '=', $id)->get();
+        $forums = Forum::where('account_id', '=', $id)->get();
+        $comments = Comment::where('account_id', '=', $id)->get();
+        return view('profile', compact('user', 'articles', 'forums', 'comments'));
     }
 }

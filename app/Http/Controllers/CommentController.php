@@ -20,15 +20,13 @@ class CommentController extends Controller
             'content' => $content,
         ]);
 
-        $forum = Forum::with(['comments', 'pictures', 'account'])->findOrFail($id);
-        return view('forum.detail', compact('forum'));
+        return redirect()->route('forums.show', $id);
     }
 
     public function delete($id, $forumid){
         $comment=Comment::findOrFail($id);
         $comment->delete();
-        $forum = Forum::with(['comments', 'pictures', 'account'])->findOrFail($forumid);
-        return view('forum.detail', compact('forum'));
+        return redirect()->route('forums.show', $forumid);
     }
 
 }
