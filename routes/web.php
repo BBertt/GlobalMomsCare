@@ -28,7 +28,6 @@ Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('articles
 // ==================
 // FORUMS ROUTING
 // ==================
-
 // Routing Buat Ke Page ==== FORUMS ====
 Route::get('/forums', [ForumController::class, 'index'])->name('forums.index');
 // Routing Search Bar + Kategory Di  ==== FORUM ====
@@ -39,9 +38,10 @@ Route::get('/forums/detail/{id}', [ForumController::class, 'show'])->name('forum
 // ==================
 // PRODUCT ROUTING
 // ==================
-
 // Routing Buat ke Page ==== PRODUCT ====
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+// Routing ke Page PRODUCT DETAIL ==== PRODUCT ====
+Route::get('/products/detail/{id}', [ProductController::class, 'show'])->name('products.show');
 
 // ==================================
 // INI ROUTING GUESS [GA PUNYA AKUN]
