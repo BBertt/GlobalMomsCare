@@ -18,7 +18,7 @@ class AccountSeeder extends Seeder
         $faker = Faker::create();
         Account::create([
             'name' => 'Admin',
-            'email' => 'Admin@gmail.com',
+            'email' => 'admin@gmail.com',
             'password' => Hash::make('admin1234'),
             'role' => 'admin',
             'description' => $faker->sentence(),

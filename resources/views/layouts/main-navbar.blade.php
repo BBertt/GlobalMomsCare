@@ -16,7 +16,7 @@
                     <a class="nav-link text-dark fw-semibold mr-3" href="/forums">Forums</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark fw-semibold mr-3" href="#">Products</a>
+                    <a class="nav-link text-dark fw-semibold mr-3" href="/products">Products</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-dark fw-semibold mr-3" href="#">Pregnancy Calendar</a>

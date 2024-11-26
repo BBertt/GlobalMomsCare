@@ -75,6 +75,11 @@
                             <h2 class="text-xl font-bold text-gray-800 mb-0">{{ $forum->title }}</h2>
                             <h6 class="text-sm font-semibold text-gray-500">By {{ $forum->account->name }}</h6>
                             <p class="text-gray-600 mt-2">{{ Str::limit($forum->content, 150, '...') }}</p>
+                            <div class="flex flex-wrap justify-start items-center mb-2 gap-2">
+                                @foreach ($forum->categories as $category)
+                                    <p class="text-white text-xs p-1 px-2 bg-red-500 inline-block rounded-lg">{{ $category->name }}</p>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 </a>

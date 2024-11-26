@@ -72,7 +72,12 @@
             <div class="flex flex-col justify-between flex-1 p-6">
                 <div>
                     <h5 class="text-xl font-bold text-red-600 mb-4">{{ Str::words($article->title, 5) }}</h5>
-                    <p class="text-gray-700 mb-6">{{ Str::words($article->content, 20) }}</p>
+                    <p class="text-gray-700 mb-4">{{ Str::words($article->content, 20) }}</p>
+                </div>
+                <div class="flex flex-wrap justify-start items-center mb-2 gap-2">
+                    @foreach ($article->categories as $category)
+                        <p class="text-white text-xs p-1 px-2 bg-red-500 inline-block rounded-lg">{{ $category->name }}</p>
+                    @endforeach
                 </div>
                 <a href="{{ route('articles.show', $article->id) }}" class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded transition duration-300 self-start inline-block" style="text-decoration: none;">
                     Learn More

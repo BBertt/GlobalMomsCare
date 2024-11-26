@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->foreignId('account_id')->constrained('accounts')->onDelete('cascade'); // Admin role only
-            $table->string('productName');
+            $table->string('name');
             $table->text('description');
             $table->decimal('price', 10, 2);
             $table->integer('stock');

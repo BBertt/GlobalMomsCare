@@ -5,11 +5,16 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ForumController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 // =============================
 // INI ROUTING UNTUK SEMUA ORANG
 // =============================
+
+// ==================
+// HOME ROUTING
+// ==================
 // Routing Home
 Route::get('/', function () {
     return redirect()->route('home');
@@ -20,12 +25,23 @@ Route::get('/articles', [ArticleController::class, 'index'])->name('articles.ind
 // Routing Buat Read More [Detail Articles]
 Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('articles.show');
 
+// ==================
+// FORUMS ROUTING
+// ==================
+
 // Routing Buat Ke Page ==== FORUMS ====
 Route::get('/forums', [ForumController::class, 'index'])->name('forums.index');
 // Routing Search Bar + Kategory Di  ==== FORUM ====
 Route::get('/forums/search', [ForumController::class, 'search'])->name('forums.search');
 // Routing Buat Read More [Detail ==== FORUM ====]
 Route::get('/forums/detail/{id}', [ForumController::class, 'show'])->name('forums.show');
+
+// ==================
+// PRODUCT ROUTING
+// ==================
+
+// Routing Buat ke Page ==== PRODUCT ====
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
 // ==================================
 // INI ROUTING GUESS [GA PUNYA AKUN]
@@ -46,6 +62,9 @@ Route::middleware('auth')->group(function () {
     // Logout
     Route::post('/logout', [AccountController::class, 'logout'])->name('logout');
 
+    // ==================
+    // ARTICLE ROUTING
+    // ==================
     // Routing buat create Article [Cuma role "professional" yg bisa access udh di check di home.blade.php]
     Route::get('/articles/new/create', [ArticleController::class, 'create'])->name('articles.new.create');
     // Simpen Article yang baru dibuat
@@ -57,6 +76,9 @@ Route::middleware('auth')->group(function () {
     // Simpen Article yang udh di Update
     Route::put('/article/update/store/{id}', [ArticleController::class, 'update'])->name('articles.update');
 
+    // ==================
+    // FORUM ROUTING
+    // ==================
     // Routing Untuk Create Forum
     Route::get('/forums/new/create', [ForumController::class, 'create'])->name('forums.new.create');
     // Simpen Forum yang baru dibuat
@@ -68,6 +90,9 @@ Route::middleware('auth')->group(function () {
     // Simpen Forum yang di Update
     Route::put('/forums/update/store/{id}', [ForumController::class, 'update'])->name('forums.update');
 
+    // ==================
+    // COMMENT ROUTING
+    // ==================
     // Simpen Comment
     Route::post('/comment/store/{id}', [CommentController::class, 'store'])->name('comment.store');
     // Delete Comment [Dari Page Forumnya]
@@ -75,9 +100,23 @@ Route::middleware('auth')->group(function () {
     // Delete Comment [Dari Page Profile]
     Route::post('/comment/delete/{id}', [CommentController::class, 'deleteBackProfile'])->name('comment.delete.profile');
 
+    // ==================
+    // PROFILE ROUTING
+    // ==================
     //Open Profile Page
     Route::get('/profile' ,[AccountController::class, 'profile'])->name('profile.show');
 
+    // ==================
+    // PRODUCT ROUTING
+    // ==================
+    // Pindah ke page Create PRODUCT
+    Route::get('/product/new/create', [ProductController::class, 'create'])->name('products.create');
+    // Store Product
+    Route::post('/product/store', [ProductController::class, 'store'])->name('products.store');
+
+    // ==================
+    // CHATTING ROUTING
+    // ==================
     // Get Chat
     Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
     // Send Chat
