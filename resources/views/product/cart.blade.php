@@ -98,9 +98,15 @@
             </dl>
           </div>
 
-          <button type="submit" class="flex no-underline w-full items-center justify-center rounded-lg bg-red-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-4">
-            Proceed to Checkout
-          </button>
+          @if ($carts->isNotEmpty())
+            <button type="submit" class="flex no-underline w-full items-center justify-center rounded-lg bg-red-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-4">
+                Proceed to Checkout
+            </button>
+          @else
+            <p class="cursor-pointer flex no-underline w-full items-center justify-center rounded-lg bg-red-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-4">
+                No Items to Checkout
+            </p>
+          @endif
 
           <div class="flex items-center justify-center gap-2">
             <span class="text-sm font-normal text-gray-500 dark:text-gray-400"> or </span>

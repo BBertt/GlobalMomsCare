@@ -28,6 +28,14 @@ class OrderDetailController extends Controller
 
         Cart::where('account_id', Auth::id())->delete();
 
-        return redirect()->route('products.index');
+        return redirect()->route('orders.payment', $accountOrderDetail->id);
+    }
+
+    public function payment($id){
+        $orders = AccountOrderDetail::findOrFail($id);
+        if($orders->status == "Waiting Payment")
+            return view('order.payment', compact('orders'));
+        else
+            return view('product.cart');
     }
 }

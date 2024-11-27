@@ -140,6 +140,8 @@ Route::middleware('auth')->group(function () {
     // =====================
     // Add to Order Detail
     Route::post('/order', [OrderDetailController::class, 'store'])->name('orders.store');
+    // Ke Payment page
+    Route::get('/payment/{id}', [OrderDetailController::class, 'payment'])->name('orders.payment');
 
     // ==================
     // CHATTING ROUTING
