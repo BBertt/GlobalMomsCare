@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\OrderDetail;
 use App\Models\Picture;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -13,7 +14,8 @@ class ProductController extends Controller
     //
     public function index(){
         $products = Product::all();
-        return view('product.product', compact('products'));
+        $categories = Category::all();
+        return view('product.product', compact('products', 'categories'));
     }
 
     public function create(){
@@ -60,5 +62,74 @@ class ProductController extends Controller
     public function show($id){
         $product = Product::findOrFail($id);
         return view('product.detail', compact('product'));
+    }
+
+    public function delete($id){
+        $product = Product::findOrFail($id);
+        $product->delete();
+        return redirect()->route('products.index');
+    }
+
+    public function updatePage($id){
+        $product = Product::findOrFail($id);
+        $categories = Category::all();
+        return view('product.update', compact('product', 'categories'));
+    }
+
+    public function update(Request $request, $id){
+        $product = Product::findOrFail($id);
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required',
+            'stock' => 'required',
+            'description' => 'required',
+            'categories' => 'required|array',
+            'categories.*' => 'exists:categories,id',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+        $product->update($validated);
+
+        $product->categories()->sync($request->categories);
+
+        // Handle new images if provided
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('images', 'public');
+                $picture = Picture::create([
+                    'pictureLink' => $path,
+                ]);
+                $product->pictures()->attach($picture->id);
+            }
+        }
+
+        return redirect()->route('products.index');
+    }
+
+    public function search(Request $request){
+        $search = $request->input('search');
+        $categories = $request->input('categories');
+
+        $products = Product::when($search, function ($query, $search) {
+            return $query->where('name', 'like', '%' . $search . '%');
+        })
+        ->when($categories, function ($query, $categories) {
+            return $query->whereHas('categories', function ($categoryQuery) use ($categories) {
+                $categoryQuery->whereIn('categories.id', $categories);
+            }, '=', count($categories));
+        })
+        ->get();
+
+        $categories = Category::all();
+
+        return view('product.product', compact('products', 'categories'));
+    }
+
+    public function order(Request $request, $id){
+        OrderDetail::create([
+            'quantity' => $request->quantity,
+            'status' => 'Waiting Payment',
+            'product_id' => $id,
+        ]);
+        return redirect()->route('orders.index');
     }
 }

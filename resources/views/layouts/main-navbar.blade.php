@@ -19,6 +19,9 @@
                     <a class="nav-link text-dark fw-semibold mr-3" href="/products">Products</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link text-dark fw-semibold mr-3" href="{{ route('orders.index') }}">Products Order</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link text-dark fw-semibold mr-3" href="#">Pregnancy Calendar</a>
                 </li>
                 <li class="nav-item">

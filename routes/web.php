@@ -5,6 +5,7 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ForumController;
+use App\Http\Controllers\OrderDetailController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +43,8 @@ Route::get('/forums/detail/{id}', [ForumController::class, 'show'])->name('forum
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 // Routing ke Page PRODUCT DETAIL ==== PRODUCT ====
 Route::get('/products/detail/{id}', [ProductController::class, 'show'])->name('products.show');
+// Searching Product
+Route::get('/products/search', [ProductController::class, 'search'])->name('products.search');
 
 // ==================================
 // INI ROUTING GUESS [GA PUNYA AKUN]
@@ -113,6 +116,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/product/new/create', [ProductController::class, 'create'])->name('products.create');
     // Store Product
     Route::post('/product/store', [ProductController::class, 'store'])->name('products.store');
+    // Delete Product
+    Route::delete('/products/delete/{id}', [ProductController::class, 'delete'])->name('products.delete');
+    // Pindah ke Update Page PRODUCT
+    Route::get('/product/update/{id}', [ProductController::class, 'updatePage'])->name('products.update.page');
+    // Store Updated Data
+    Route::put('/product/update/store/{id}', [ProductController::class, 'update'])->name('products.update');
+    // Beli Product [Masukkin ke OrderDetail] ACCESS USING URL (CANNOT USING NAME)
+    Route::post('/product/order/{id}', [ProductController::class, 'order'])->name('products.order');
+
+    // =====================
+    // ORDER PRODUCT ROUTING
+    // =====================
+    // Show all order
+    Route::get('/order', [OrderDetailController::class, 'index'])->name('orders.index');
 
     // ==================
     // CHATTING ROUTING
