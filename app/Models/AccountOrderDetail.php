@@ -9,4 +9,16 @@ class AccountOrderDetail extends Model
 {
     /** @use HasFactory<\Database\Factories\AccountOrderDetailFactory> */
     use HasFactory;
+
+    protected $fillable = ['deliver', 'arrive', 'account_id'];
+
+    public function account()
+    {
+        return $this->belongsTo(Account::class);
+    }
+
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetail::class);
+    }
 }

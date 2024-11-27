@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Category;
-use App\Models\OrderDetail;
 use App\Models\Picture;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -124,12 +124,11 @@ class ProductController extends Controller
         return view('product.product', compact('products', 'categories'));
     }
 
-    public function order(Request $request, $id){
-        OrderDetail::create([
+    public function addCart(Request $request, $id){
+        Cart::create([
             'quantity' => $request->quantity,
-            'status' => 'Waiting Payment',
             'product_id' => $id,
         ]);
-        return redirect()->route('orders.index');
+        return redirect()->route('carts.index');
     }
 }

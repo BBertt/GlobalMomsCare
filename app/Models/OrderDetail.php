@@ -10,15 +10,15 @@ class OrderDetail extends Model
     /** @use HasFactory<\Database\Factories\OrderDetailFactory> */
         use HasFactory;
 
-    protected $fillable = ['quantity', 'status', 'product_id'];
+    protected $fillable = ['quantity', 'status', 'product_id', 'accountorderdetail_id'];
+
+    public function accountOrderDetail()
+    {
+        return $this->belongsTo(AccountOrderDetail::class);
+    }
 
     public function product()
     {
         return $this->belongsTo(Product::class);
-    }
-
-    public function accounts()
-    {
-        return $this->belongsToMany(Account::class, 'account_order_details');
     }
 }

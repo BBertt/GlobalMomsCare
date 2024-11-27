@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('account_order_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('orderdetail_id')->constrained('order_details')->onDelete('cascade');
+            $table->string('status');
+            $table->date('deliver')->nullable();
+            $table->date('arrive')->nullable();
             $table->foreignId('account_id')->constrained('accounts')->onDelete('cascade');
             $table->timestamps();
         });

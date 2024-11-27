@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ForumController;
@@ -123,13 +124,13 @@ Route::middleware('auth')->group(function () {
     // Store Updated Data
     Route::put('/product/update/store/{id}', [ProductController::class, 'update'])->name('products.update');
     // Beli Product [Masukkin ke OrderDetail] ACCESS USING URL (CANNOT USING NAME)
-    Route::post('/product/order/{id}', [ProductController::class, 'order'])->name('products.order');
+    Route::post('/product/add/cart/{id}', [ProductController::class, 'addCart'])->name('products.cart');
 
     // =====================
-    // ORDER PRODUCT ROUTING
+    // CART ROUTING
     // =====================
-    // Show all order
-    Route::get('/order', [OrderDetailController::class, 'index'])->name('orders.index');
+    // Show all cart
+    Route::get('/cart', [CartController::class, 'index'])->name('carts.index');
 
     // ==================
     // CHATTING ROUTING

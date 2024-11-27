@@ -60,9 +60,9 @@ class Account extends Authenticatable
         return $this->hasMany(Chat::class, 'receiver_id');
     }
 
-    public function orderDetails()
+    public function accountOrderDetail()
     {
-        return $this->belongsToMany(OrderDetail::class, 'account_order_details');
+        return $this->hasMany(AccountOrderDetail::class);
     }
 
     public function events()

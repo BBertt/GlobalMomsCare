@@ -64,7 +64,7 @@
                 <h2 class="sr-only">Product information</h2>
                 <p class="text-3xl tracking-tight text-gray-900">Rp. {{ $product->price }}</p>
 
-                <form method="POST" class="mt-10" action="/product/order/{{ $product->id }}">
+                <form method="POST" class="mt-10" action="/product/add/cart/{{ $product->id }}">
                     @csrf
                     <!-- Quantity -->
                     <div>
@@ -72,7 +72,7 @@
                         <input type="number" name="quantity" id="quantity" class="w-full p-3 border rounded-lg shadow-sm" placeholder="Enter the product quantity" required value="1">
                     </div>
 
-                    <button type="submit" class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Purchase</button>
+                    <button type="submit" class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Add To Cart</button>
                 </form>
             </div>
 
