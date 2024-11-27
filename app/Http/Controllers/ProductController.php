@@ -125,9 +125,9 @@ class ProductController extends Controller
     }
 
     public function addCart(Request $request, $id){
-        Cart::create([
-            'quantity' => $request->quantity,
+        Cart::firstOrCreate([
             'product_id' => $id,
+            'account_id' => Auth::id(),
         ]);
         return redirect()->route('carts.index');
     }

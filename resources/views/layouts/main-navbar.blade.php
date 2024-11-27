@@ -15,12 +15,25 @@
                 <li class="nav-item">
                     <a class="nav-link text-dark fw-semibold mr-3" href="/forums">Forums</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark fw-semibold mr-3" href="/products">Products</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark fw-semibold mr-3" href="{{ route('carts.index') }}">Products Order</a>
-                </li>
+                @if (auth()->check())
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-black bg-white fw-semibold mr-4 px-2 py-2 rounded" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Product
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark mx-3" href="/products">Products</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark mx-3" href="{{ route('carts.index') }}">Cart</a>
+                            </li>
+                        </ul>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link text-dark fw-semibold mr-3" href="/products">Products</a>
+                    </li>
+                @endif
                 <li class="nav-item">
                     <a class="nav-link text-dark fw-semibold mr-3" href="#">Pregnancy Calendar</a>
                 </li>

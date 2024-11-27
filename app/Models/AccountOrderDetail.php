@@ -10,7 +10,7 @@ class AccountOrderDetail extends Model
     /** @use HasFactory<\Database\Factories\AccountOrderDetailFactory> */
     use HasFactory;
 
-    protected $fillable = ['deliver', 'arrive', 'account_id'];
+    protected $fillable = ['status', 'deliver', 'arrive', 'account_id'];
 
     public function account()
     {

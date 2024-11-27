@@ -8,6 +8,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\OrderDetailController;
 use App\Http\Controllers\ProductController;
+use App\Models\OrderDetail;
 use Illuminate\Support\Facades\Route;
 
 // =============================
@@ -131,6 +132,14 @@ Route::middleware('auth')->group(function () {
     // =====================
     // Show all cart
     Route::get('/cart', [CartController::class, 'index'])->name('carts.index');
+    // Delete From Cart
+    Route::delete('/cart/delete/{id}', [CartController::class, 'delete'])->name('carts.delete');
+
+    // =====================
+    // ORDER ROUTING
+    // =====================
+    // Add to Order Detail
+    Route::post('/order', [OrderDetailController::class, 'store'])->name('orders.store');
 
     // ==================
     // CHATTING ROUTING

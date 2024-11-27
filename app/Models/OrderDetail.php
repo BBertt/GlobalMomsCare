@@ -10,7 +10,7 @@ class OrderDetail extends Model
     /** @use HasFactory<\Database\Factories\OrderDetailFactory> */
         use HasFactory;
 
-    protected $fillable = ['quantity', 'status', 'product_id', 'accountorderdetail_id'];
+    protected $fillable = ['quantity', 'product_id', 'accountorderdetail_id'];
 
     public function accountOrderDetail()
     {
