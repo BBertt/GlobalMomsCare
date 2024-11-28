@@ -119,7 +119,8 @@
                     </span>
                     <div class="absolute left-3 top-8 w-px h-full bg-blue-500 dark:bg-gray-700"></div>
                     <h4 class="ml-10 mb-0.5 text-base font-semibold text-blue-700 dark:text-blue-500">{{ $orders->arrive->format('d M Y, H:i') }}</h4>
-                    <p class="ml-10 text-sm text-blue-700 dark:text-blue-500">Ordered has arrived at the destination</p>
+                    <p class="ml-10 mb-0 text-wrap text-sm text-blue-700 dark:text-blue-500">Ordered has arrived at the destination</p>
+                    <p class="ml-10 text-wrap text-sm text-blue-700 dark:text-blue-500">({{ $orders->account->address }})</p>
                 @endif
 
                 <!-- Delivering -->
