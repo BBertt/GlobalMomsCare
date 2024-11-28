@@ -119,7 +119,7 @@ Route::middleware('auth')->group(function () {
     // Store Product
     Route::post('/product/store', [ProductController::class, 'store'])->name('products.store');
     // Delete Product
-    Route::delete('/products/delete/{id}', [ProductController::class, 'delete'])->name('products.delete');
+    Route::delete('/product/delete/{id}', [ProductController::class, 'delete'])->name('products.delete');
     // Pindah ke Update Page PRODUCT
     Route::get('/product/update/{id}', [ProductController::class, 'updatePage'])->name('products.update.page');
     // Store Updated Data
@@ -141,13 +141,13 @@ Route::middleware('auth')->group(function () {
     // Add to Order Detail
     Route::post('/order', [OrderDetailController::class, 'store'])->name('orders.store');
     // Ke Payment page
-    Route::get('/payment/{id}', [OrderDetailController::class, 'payment'])->name('orders.payment');
+    Route::get('/order/payment/{id}', [OrderDetailController::class, 'payment'])->name('orders.payment');
     // Show Semua Order
     Route::get('/orders', [OrderDetailController::class, 'index'])->name('orders.index');
     // Cancel Order
-    Route::post('/cancelled/order/{id}', [OrderDetailController::class, 'cancel'])->name('orders.cancel');
+    Route::post('/order/cancelled/{id}', [OrderDetailController::class, 'cancel'])->name('orders.cancel');
     // Process Payment
-    Route::post('/process/payment/{id}', [OrderDetailController::class, 'processPayment'])->name('orders.process.payment');
+    Route::post('/order/process/payment/{id}', [OrderDetailController::class, 'processPayment'])->name('orders.process.payment');
     // Summary Dari Order Habis Bayar
     Route::get('/order/summary/{id}', [OrderDetailController::class, 'summary'])->name('orders.summary');
     // Tracking Order yang udh dibayar
