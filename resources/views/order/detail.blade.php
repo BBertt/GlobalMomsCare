@@ -86,7 +86,7 @@
             {{-- order history --}}
             <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Order history</h3>
 
-            <ol class="relative ms-3 border-s border-gray-200 dark:border-gray-700">
+            <ol class="relative pl-0 pr-5 ms-3 border-s border-gray-200 dark:border-gray-700">
                 <!-- Estimated Delivery -->
                 <li class="mb-10 ms-6 relative">
                 <span class="absolute -start-3 flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white dark:bg-gray-700 dark:ring-gray-800">
@@ -95,8 +95,8 @@
                     </svg>
                 </span>
                 <div class="absolute left-3 top-6 w-px h-full bg-gray-300 dark:bg-gray-700"></div>
-                <h4 class="mb-0.5 text-base font-semibold text-gray-900 dark:text-white">Estimated delivery in 24 Nov 2023</h4>
-                <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Products delivered</p>
+                <h4 class="ml-10 mb-0.5 text-base font-semibold text-gray-900 dark:text-white">Estimated delivery in 24 Nov 2023</h4>
+                <p class="ml-10 text-sm font-normal text-gray-500 dark:text-gray-400">Products delivered</p>
                 </li>
 
                 <!-- Today -->
@@ -107,8 +107,8 @@
                     </svg>
                 </span>
                 <div class="absolute left-3 top-6 w-px h-full bg-gray-300 dark:bg-gray-700"></div>
-                <h4 class="mb-0.5 text-base font-semibold text-gray-900 dark:text-white">Today</h4>
-                <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Products being delivered</p>
+                <h4 class="ml-10 mb-0.5 text-base font-semibold text-gray-900 dark:text-white">Today</h4>
+                <p class="ml-10 text-sm font-normal text-gray-500 dark:text-gray-400">Products being delivered</p>
                 </li>
 
                 <!-- Steps -->
@@ -119,10 +119,11 @@
                     </svg>
                 </span>
                 <div class="absolute left-3 top-6 w-px h-full bg-gray-300 dark:bg-gray-700"></div>
-                <h4 class="mb-0.5 font-semibold">23 Nov 2023, 15:15</h4>
-                <p class="text-sm">Products in the courier's warehouse</p>
+                <h4 class="ml-10 mb-0.5 text-base font-semibold">{{ $orders->deliver->format('d M Y, H:i') }}</h4>
+                <p class="ml-10 text-sm">Products delivered to the courier - DHL Express</p>
                 </li>
 
+                {{-- Payment --}}
                 <li class="mb-10 ms-6 relative text-blue-700 dark:text-blue-500">
                 <span class="absolute -start-3 flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 ring-8 ring-white dark:bg-blue-900 dark:ring-gray-800">
                     <svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -130,18 +131,19 @@
                     </svg>
                 </span>
                 <div class="absolute left-3 top-6 w-px h-full bg-gray-300 dark:bg-gray-700"></div>
-                <h4 class="mb-0.5 text-base font-semibold">22 Nov 2023, 12:27</h4>
-                <p class="text-sm">Products delivered to the courier - DHL Express</p>
+                <h4 class="ml-10 mb-0.5 text-base font-semibold">{{ $orders->payment->format('d M Y, H:i') }}</h4>
+                <p class="ml-10 text-sm">Payment Completed</p>
                 </li>
 
+                {{-- Created Order --}}
                 <li class="mb-10 ms-6 relative text-blue-700 dark:text-blue-500">
                 <span class="absolute -start-3 flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 ring-8 ring-white dark:bg-blue-900 dark:ring-gray-800">
                     <svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5" />
                     </svg>
                 </span>
-                <h4 class="mb-0.5 font-semibold">19 Nov 2023, 10:47</h4>
-                <p class="text-sm">Payment accepted - VISA Credit Card</p>
+                <h4 class="ml-10 mb-0.5 text-base font-semibold">{{ $orders->created_at->format('d M Y, H:i') }}</h4>
+                <p class="ml-10 text-sm">Order created</p>
                 </li>
             </ol>
             <div class="gap-4 sm:flex sm:items-center">

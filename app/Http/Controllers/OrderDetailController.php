@@ -21,6 +21,7 @@ class OrderDetailController extends Controller
             'status' => 'Waiting Payment',
             'deliver' => now()->addDays(0),
             'arrive' => now()->addDays(2),
+            'payment' => now(),
             'account_id' => Auth::id(),
         ]);
 
@@ -65,6 +66,7 @@ class OrderDetailController extends Controller
         $orders->status = "Processing Order";
         $orders->deliver = now()->addDays(0);
         $orders->arrive = now()->addDays(2);
+        $orders->payment = now()->addDays(0);
         $orders->save();
         return redirect()->route('orders.summary', $id);
     }

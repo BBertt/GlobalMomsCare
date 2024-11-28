@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('account_order_details', function (Blueprint $table) {
             $table->id();
             $table->string('status');
-            $table->date('deliver')->nullable();
-            $table->date('arrive')->nullable();
+            $table->timestamp('deliver')->nullable();
+            $table->timestamp('arrive')->nullable();
+            $table->timestamp('payment')->nullable();
             $table->foreignId('account_id')->constrained('accounts')->onDelete('cascade');
             $table->timestamps();
         });
