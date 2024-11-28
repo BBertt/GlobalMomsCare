@@ -146,6 +146,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/orders', [OrderDetailController::class, 'index'])->name('orders.index');
     // Cancel Order
     Route::post('/cancelled/order/{id}', [OrderDetailController::class, 'cancel'])->name('orders.cancel');
+    // Process Payment
+    Route::post('/process/payment/{id}', [OrderDetailController::class, 'processPayment'])->name('orders.process.payment');
+    // Summary Dari Order Habis Bayar
+    Route::get('/order/summary/{id}', [OrderDetailController::class, 'summary'])->name('orders.summary');
+    // Tracking Order yang udh dibayar
+    Route::get('/order/track/{id}', [OrderDetailController::class, 'track'])->name('orders.track');
 
     // ==================
     // CHATTING ROUTING

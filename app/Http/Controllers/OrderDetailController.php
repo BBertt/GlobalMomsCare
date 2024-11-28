@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
 use App\Models\AccountOrderDetail;
 use App\Models\Cart;
 use App\Models\OrderDetail;
@@ -38,10 +39,11 @@ class OrderDetailController extends Controller
 
     public function payment($id){
         $orders = AccountOrderDetail::findOrFail($id);
+        $user = Auth::user();
         if($orders->status == "Waiting Payment")
-            return view('order.payment', compact('orders'));
+            return view('order.payment', compact('orders', 'user'));
         else
-            return view('product.cart');
+            return redirect()->route('products.index');
     }
 
     public function cancel($id){
@@ -49,5 +51,32 @@ class OrderDetailController extends Controller
         $order->status = 'Cancelled';
         $order->save();
         return redirect()->route('orders.index');
+    }
+
+    public function processPayment(Request $request, $id){
+        $orders = AccountOrderDetail::findOrFail($id);
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required',
+            'address' => 'required',
+        ]);
+        $user = Account::findOrFail(Auth::id());
+        $user->update($validated);
+        $orders->status = "Processing Order";
+        $orders->deliver = now()->addDays(0);
+        $orders->arrive = now()->addDays(2);
+        $orders->save();
+        return redirect()->route('orders.summary', $id);
+    }
+
+    public function summary($id){
+        $orders = AccountOrderDetail::findOrFail($id);
+        $user = Account::findOrFail(Auth::id());
+        return view('order.summary', compact('orders', 'user'));
+    }
+
+    public function track($id){
+        $orders = AccountOrderDetail::findOrFail($id);
+        return view('order.detail', compact('orders'));
     }
 }

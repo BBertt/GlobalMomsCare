@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Product')
+@section('title', 'Track Product')
 
 @section('content')
 <section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
