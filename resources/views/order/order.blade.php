@@ -130,6 +130,13 @@
             <p>No orders yet...</p>
         @endif
 
+
+    </div>
+
+    <div class="flex justify-end mt-10 pr-24">
+        <div class="d-flex justify-content-center">
+            {{ $orders->links('pagination::bootstrap-4') }}
+        </div>
     </div>
   </div>
 </section>

@@ -13,9 +13,10 @@ use Illuminate\Support\Facades\Auth;
 class OrderDetailController extends Controller
 {
     public function index(){
-        $orders = AccountOrderDetail::with('orderDetails')->where('account_id', '=', Auth::id())->get();
-        if(Auth::user()->role == "admin"){
-            $orders = AccountOrderDetail::all();
+        if (Auth::user()->role == "admin") {
+            $orders = AccountOrderDetail::with('orderDetails')->paginate(10);
+        } else {
+            $orders = AccountOrderDetail::with('orderDetails')->where('account_id', '=', Auth::id())->paginate(10);
         }
         return view('order.order', compact('orders'));
     }
