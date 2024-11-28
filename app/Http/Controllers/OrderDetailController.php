@@ -6,6 +6,7 @@ use App\Models\Account;
 use App\Models\AccountOrderDetail;
 use App\Models\Cart;
 use App\Models\OrderDetail;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -73,6 +74,11 @@ class OrderDetailController extends Controller
         $orders->arrive = now()->addDays(2);
         $orders->payment = now()->addDays(0);
         $orders->save();
+        foreach($orders->orderDetails as $order){
+            $product = Product::findOrFail($order->product->id);
+            $product->stock = $product->stock - $order->quantity;
+            $product->save();
+        }
         return redirect()->route('orders.summary', $id);
     }
 

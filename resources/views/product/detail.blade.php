@@ -63,6 +63,7 @@
             <div class="mt-4 lg:row-span-3 lg:mt-0">
                 <h2 class="sr-only">Product information</h2>
                 <p class="text-3xl tracking-tight text-gray-900">Rp. {{ $product->price }}</p>
+                <p class="text-base font-bold tracking-tight text-gray-900">Available Stock: {{ $product->stock }}</p>
 
                 <form method="POST" class="mt-10" action="/product/add/cart/{{ $product->id }}">
                     @csrf

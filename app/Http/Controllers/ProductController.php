@@ -13,7 +13,11 @@ class ProductController extends Controller
 {
     //
     public function index(){
-        $products = Product::all();
+        if(Auth::user()->role=="admin"){
+            $products = Product::all();
+        }else{
+            $products = Product::where('stock', '>', 0)->get();
+        }
         $categories = Category::all();
         return view('product.product', compact('products', 'categories'));
     }
@@ -109,15 +113,28 @@ class ProductController extends Controller
         $search = $request->input('search');
         $categories = $request->input('categories');
 
-        $products = Product::when($search, function ($query, $search) {
+        if(Auth::user()->role == "admin"){
+            $products = Product::when($search, function ($query, $search) {
             return $query->where('name', 'like', '%' . $search . '%');
-        })
-        ->when($categories, function ($query, $categories) {
-            return $query->whereHas('categories', function ($categoryQuery) use ($categories) {
-                $categoryQuery->whereIn('categories.id', $categories);
-            }, '=', count($categories));
-        })
-        ->get();
+            })
+            ->when($categories, function ($query, $categories) {
+                return $query->whereHas('categories', function ($categoryQuery) use ($categories) {
+                    $categoryQuery->whereIn('categories.id', $categories);
+                }, '=', count($categories));
+            })
+            ->get();
+        }else{
+            $products = Product::when($search, function ($query, $search) {
+            return $query->where('name', 'like', '%' . $search . '%');
+            })
+            ->where('stock', '>', 0)
+            ->when($categories, function ($query, $categories) {
+                return $query->whereHas('categories', function ($categoryQuery) use ($categories) {
+                    $categoryQuery->whereIn('categories.id', $categories);
+                }, '=', count($categories));
+            })
+            ->get();
+        }
 
         $categories = Category::all();
 

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class CartController extends Controller
 {
     public function index(){
-        $carts = Cart::with('product')->where('account_id', '=', Auth::id())->get();
+        $carts = Cart::with('product')->where('account_id', '=', Auth::id())->whereHas('product', function($query){ $query->where('stock', '>', 0);})->get();
         return view('product.cart', compact('carts'));
     }
 

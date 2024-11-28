@@ -99,20 +99,20 @@
                                         <button type="submit" class="w-full rounded-lg border border-red-700 px-3 py-2 text-center text-sm font-medium text-red-700 hover:bg-red-700 hover:text-white focus:outline-none focus:ring-4 focus:ring-red-300 dark:border-red-500 dark:text-red-500 dark:hover:bg-red-600 dark:hover:text-white dark:focus:ring-red-900 lg:w-auto text-nowrap">Cancel order</button>
                                     </form>
                                 @endif
-                                @if ($order->status == "Processing Order")
+                                @if ($order->status == "Processing Order" && auth()->user()->role == "admin")
                                     <form action="{{ route('orders.process.deliver', $order->id) }}" method="POST">
                                         @csrf
                                         <button type="submit" class="w-full rounded-lg border border-red-700 px-3 py-2 text-center text-sm font-medium text-red-700 hover:bg-red-700 hover:text-white focus:outline-none focus:ring-4 focus:ring-red-300 dark:border-red-500 dark:text-red-500 dark:hover:bg-red-600 dark:hover:text-white dark:focus:ring-red-900 lg:w-auto text-nowrap">Process & Deliver</button>
                                     </form>
                                 @endif
-                                @if ($order->status == "Shipping")
+                                @if ($order->status == "Shipping" && auth()->user()->role == "admin")
                                     <form action="{{ route('orders.completed', $order->id) }}" method="POST">
                                         @csrf
                                         <button type="submit" class="w-full rounded-lg border border-red-700 px-3 py-2 text-center text-sm font-medium text-gray-50 bg-green-500 hover:bg-gray-50 hover:text-green-500 focus:outline-none focus:ring-4 focus:ring-red-300 dark:border-red-500 dark:text-red-500 dark:hover:bg-red-600 dark:hover:text-white dark:focus:ring-red-900 lg:w-auto text-nowrap">Finish Order</button>
                                     </form>
                                 @endif
                                 @if ($order->status == "Waiting Payment")
-                                    @if(auth()->check() && auth()->user()->id != $order->id)
+                                    @if(auth()->check() && auth()->user()->id == $order->account_id)
                                         <a href="{{ route('orders.payment', $order->id) }}" class="no-underline w-full inline-flex justify-center rounded-lg  border border-gray-200 bg-red-500 px-3 py-2 text-sm font-medium text-gray-50 hover:bg-gray-100 hover:text-red-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 lg:w-auto text-nowrap">Payment</a>
                                     @endif
                                 @elseif ($order->status == "Processing Order" || $order->status == "Shipping")
