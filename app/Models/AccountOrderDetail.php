@@ -19,6 +19,6 @@ class AccountOrderDetail extends Model
 
     public function orderDetails()
     {
-        return $this->hasMany(OrderDetail::class);
+        return $this->hasMany(OrderDetail::class, 'accountorderdetail_id');
     }
 }

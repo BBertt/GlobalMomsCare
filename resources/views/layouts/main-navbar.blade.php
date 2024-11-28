@@ -27,6 +27,9 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark mx-3" href="{{ route('carts.index') }}">Cart</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark mx-3" href="{{ route('orders.index') }}">Orders</a>
+                            </li>
                         </ul>
                     </li>
                 @else

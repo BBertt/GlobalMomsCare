@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderDetailController extends Controller
 {
+    public function index(){
+        $orders = AccountOrderDetail::with('orderDetails')->where('account_id', '=', Auth::id())->get();
+        return view('order.order', compact('orders'));
+    }
+
     public function store(Request $request){
         $accountOrderDetail = AccountOrderDetail::create([
             'status' => 'Waiting Payment',
@@ -37,5 +42,12 @@ class OrderDetailController extends Controller
             return view('order.payment', compact('orders'));
         else
             return view('product.cart');
+    }
+
+    public function cancel($id){
+        $order = AccountOrderDetail::findOrFail($id);
+        $order->status = 'Cancelled';
+        $order->save();
+        return redirect()->route('orders.index');
     }
 }

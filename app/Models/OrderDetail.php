@@ -14,7 +14,7 @@ class OrderDetail extends Model
 
     public function accountOrderDetail()
     {
-        return $this->belongsTo(AccountOrderDetail::class);
+        return $this->belongsTo(AccountOrderDetail::class, 'accountorderdetail_id');
     }
 
     public function product()

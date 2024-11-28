@@ -142,6 +142,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/order', [OrderDetailController::class, 'store'])->name('orders.store');
     // Ke Payment page
     Route::get('/payment/{id}', [OrderDetailController::class, 'payment'])->name('orders.payment');
+    // Show Semua Order
+    Route::get('/orders', [OrderDetailController::class, 'index'])->name('orders.index');
+    // Cancel Order
+    Route::post('/cancelled/order/{id}', [OrderDetailController::class, 'cancel'])->name('orders.cancel');
 
     // ==================
     // CHATTING ROUTING
