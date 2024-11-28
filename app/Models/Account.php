@@ -51,16 +51,6 @@ class Account extends Authenticatable
         return $this->hasMany(Product::class);
     }
 
-    public function sentMessages()
-    {
-        return $this->hasMany(Chat::class, 'sender_id');
-    }
-
-    public function receivedMessages()
-    {
-        return $this->hasMany(Chat::class, 'receiver_id');
-    }
-
     public function accountOrderDetail()
     {
         return $this->hasMany(AccountOrderDetail::class);

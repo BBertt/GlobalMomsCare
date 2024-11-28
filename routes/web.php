@@ -157,10 +157,6 @@ Route::middleware('auth')->group(function () {
     // ADMIN COMPLETED ORDER
     Route::post('/order/complete/{id}', [OrderDetailController::class, 'completed'])->name('orders.completed');
 
-    // ==================
-    // CHATTING ROUTING
-    // ==================
-    
 });
 
 

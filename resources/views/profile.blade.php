@@ -130,6 +130,9 @@
                     </div>
                 </div>
             @endforeach
+            @if ($forums->isEmpty())
+                <p class="text-gray-500">Haven't posted any forum yet...</p>
+            @endif
         </div>
 
         {{-- Comments Section --}}
