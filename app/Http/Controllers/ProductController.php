@@ -13,7 +13,7 @@ class ProductController extends Controller
 {
     //
     public function index(){
-        if(Auth::user()->role=="admin"){
+        if(Auth::check() &&  Auth::user()->role=="admin"){
             $products = Product::all();
         }else{
             $products = Product::where('stock', '>', 0)->get();

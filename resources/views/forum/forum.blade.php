@@ -4,57 +4,66 @@
 
 @section('content')
 <div class="container mx-auto p-6">
-    <div class="flex flex-row justify-between items-start mb-6">
-        <form method="GET" action="{{ route('forums.search') }}" class="w-full flex flex-col items-start gap-4">
-            <div class="w-full flex justify-center items-center">
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="Search forum by title..." class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
+    <div class="flex flex-row justify-between items-start mb-6 relative bg-white shadow-md dark:bg-gray-800 sm:rounded-lg w-full p-4">
+        <form method="GET" action="{{ route('forums.search') }}" class="w-full flex flex-col justify-start items-start gap-4 lg:justify-between lg:flex-row">
+            <div class="w-full flex justify-start items-center">
+                <div class="relative w-full lg:w-4/6">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search articles by title..." class="w-full pl-10 pr-10 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500">
+                </div>
                 <div class="ml-8">
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded text-sm">
                         Search
                     </button>
                 </div>
             </div>
 
-            <div class="w-full relative">
-                <button
-                    type="button"
-                    id="dropdownToggle"
-                    class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 text-left"
-                >
-                    Select Forum
-                    <span class="float-right">▼</span>
-                </button>
+            <div class="w-full flex justify-end items-center">
+                <div class="w-full lg:w-3/6 relative">
+                    <button
+                        type="button"
+                        id="dropdownToggle"
+                        class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 text-left text-nowrap text-sm"
+                    >
+                        Select Categories
+                        <span class="float-right">▼</span>
+                    </button>
 
-                <!-- Dropdown Menu -->
-                <div
-                    id="dropdownMenu"
-                    class="absolute mt-2 w-full bg-white border border-gray-300 rounded shadow-lg hidden z-10"
-                >
-                    <div class="max-h-60 overflow-y-auto p-2">
-                        @foreach($categories as $category)
-                        <label class="flex items-center space-x-2 mb-2">
-                            <input
-                                type="checkbox"
-                                id="category{{ $category->id }}"
-                                name="categories[]"
-                                value="{{ $category->id }}"
-                                {{ in_array($category->id, request('categories', [])) ? 'checked' : '' }}
-                                class="form-checkbox h-4 w-4 text-blue-500"
-                            >
-                            <span>{{ $category->name }}</span>
-                        </label>
-                        @endforeach
+                    <!-- Dropdown Menu -->
+                    <div
+                        id="dropdownMenu"
+                        class="absolute mt-2 w-full bg-white border border-gray-300 rounded shadow-lg hidden z-10"
+                    >
+                        <div class="max-h-60 overflow-y-auto p-3 text-sm">
+                            @foreach($categories as $category)
+                            <label class="flex items-center space-x-2 mb-2">
+                                <input
+                                    type="checkbox"
+                                    id="category{{ $category->id }}"
+                                    name="categories[]"
+                                    value="{{ $category->id }}"
+                                    {{ in_array($category->id, request('categories', [])) ? 'checked' : '' }}
+                                    class="form-checkbox h-4 w-4 text-blue-500"
+                                >
+                                <span>{{ $category->name }}</span>
+                            </label>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
+
+                @if(auth()->check())
+                <a href="{{ route('forums.new.create') }}" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded ml-4 no-underline whitespace-nowrap text-sm">
+                    + Create Forums
+                </a>
+                @endif
             </div>
 
         </form>
-
-        @if(auth()->check())
-        <a href="{{ route('forums.new.create') }}" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded ml-4 no-underline whitespace-nowrap">
-            + Create Forum
-        </a>
-        @endif
     </div>
 
     <div class="container mx-auto ">
