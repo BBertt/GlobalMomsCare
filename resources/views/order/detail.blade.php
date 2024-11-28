@@ -87,40 +87,42 @@
             <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Order history</h3>
 
             <ol class="relative pl-0 pr-5 ms-3 border-s border-gray-200 dark:border-gray-700">
-                <!-- Estimated Delivery -->
+                <!-- Arrival Time -->
                 <li class="mb-10 ms-6 relative">
                 <span class="absolute -start-3 flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white dark:bg-gray-700 dark:ring-gray-800">
                     <svg class="h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m4 12 8-8 8 8M6 10.5V19a1 1 0 0 0 1 1h3v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h3a1 1 0 0 0 1-1v-8.5"/>
                     </svg>
                 </span>
-                <div class="absolute left-3 top-6 w-px h-full bg-gray-300 dark:bg-gray-700"></div>
-                <h4 class="ml-10 mb-0.5 text-base font-semibold text-gray-900 dark:text-white">Estimated delivery in 24 Nov 2023</h4>
-                <p class="ml-10 text-sm font-normal text-gray-500 dark:text-gray-400">Products delivered</p>
+                <div class="absolute left-3 top-8 w-px h-full bg-gray-300 dark:bg-gray-700"></div>
+                <h4 class="ml-10 mb-0.5 text-base font-semibold text-gray-900 dark:text-white">Estimated arrival time {{ $orders->arrive->format('d M Y') }}</h4>
+                <p class="ml-10 text-sm font-normal text-gray-500 dark:text-gray-400">Waiting product to be process</p>
                 </li>
 
-                <!-- Today -->
+                <!-- Delivering -->
                 <li class="mb-10 ms-6 relative">
                 <span class="absolute -start-3 flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white dark:bg-gray-700 dark:ring-gray-800">
                     <svg class="h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h6l2 4m-8-4v8m0-8V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v9h2m8 0H9m4 0h2m4 0h2v-4m0 0h-5m3.5 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm-10 0a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"/>
                     </svg>
                 </span>
-                <div class="absolute left-3 top-6 w-px h-full bg-gray-300 dark:bg-gray-700"></div>
-                <h4 class="ml-10 mb-0.5 text-base font-semibold text-gray-900 dark:text-white">Today</h4>
-                <p class="ml-10 text-sm font-normal text-gray-500 dark:text-gray-400">Products being delivered</p>
+                <div class="absolute left-3 top-8 w-px h-full bg-gray-300 dark:bg-gray-700"></div>
+                <h4 class="ml-10 mb-0.5 text-base font-semibold text-gray-900 dark:text-white">Estimated delivery time {{ $orders->deliver->format('d M Y') }}</h4>
+                <p class="ml-10 text-sm font-normal text-gray-500 dark:text-gray-400">Waiting product to be process</p>
                 </li>
 
-                <!-- Steps -->
-                <li class="mb-10 ms-6 relative text-blue-700 dark:text-blue-500">
-                <span class="absolute -start-3 flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 ring-8 ring-white dark:bg-blue-900 dark:ring-gray-800">
-                    <svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5" />
+                <!-- Processing -->
+                <li class="mb-10 ms-6 relative">
+                <span class="absolute -start-3 flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white dark:bg-gray-700 dark:ring-gray-800">
+                    <svg class="h-4 w-4 text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4a2 2 0 0 0 1-1.73z"/>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                        <line x1="12" y1="22.08" x2="12" y2="12"/>
                     </svg>
                 </span>
-                <div class="absolute left-3 top-6 w-px h-full bg-gray-300 dark:bg-gray-700"></div>
-                <h4 class="ml-10 mb-0.5 text-base font-semibold">{{ $orders->deliver->format('d M Y, H:i') }}</h4>
-                <p class="ml-10 text-sm">Products delivered to the courier - DHL Express</p>
+                <div class="absolute left-3 top-8 w-px h-full bg-gray-300 dark:bg-gray-700"></div>
+                <h4 class="ml-10 mb-0.5 text-base font-semibold text-gray-900 dark:text-white">Estimated processing time {{ $orders->processing->format('d M Y') }}</h4>
+                <p class="ml-10 text-sm font-normal text-gray-500 dark:text-gray-400">Products being process</p>
                 </li>
 
                 {{-- Payment --}}
@@ -130,7 +132,7 @@
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5" />
                     </svg>
                 </span>
-                <div class="absolute left-3 top-6 w-px h-full bg-gray-300 dark:bg-gray-700"></div>
+                <div class="absolute left-3 top-8 w-px h-full bg-gray-300 dark:bg-gray-700"></div>
                 <h4 class="ml-10 mb-0.5 text-base font-semibold">{{ $orders->payment->format('d M Y, H:i') }}</h4>
                 <p class="ml-10 text-sm">Payment Completed</p>
                 </li>

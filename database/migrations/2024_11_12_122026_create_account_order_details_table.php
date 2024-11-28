@@ -17,6 +17,7 @@ return new class extends Migration
             $table->timestamp('deliver')->nullable();
             $table->timestamp('arrive')->nullable();
             $table->timestamp('payment')->nullable();
+            $table->timestamp('processing')->nullable();
             $table->foreignId('account_id')->constrained('accounts')->onDelete('cascade');
             $table->timestamps();
         });

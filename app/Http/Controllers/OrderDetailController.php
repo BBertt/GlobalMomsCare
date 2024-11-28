@@ -19,7 +19,8 @@ class OrderDetailController extends Controller
     public function store(Request $request){
         $accountOrderDetail = AccountOrderDetail::create([
             'status' => 'Waiting Payment',
-            'deliver' => now()->addDays(0),
+            'processing' => now()->addDays(1),
+            'deliver' => now()->addDays(1),
             'arrive' => now()->addDays(2),
             'payment' => now(),
             'account_id' => Auth::id(),
@@ -64,7 +65,8 @@ class OrderDetailController extends Controller
         $user = Account::findOrFail(Auth::id());
         $user->update($validated);
         $orders->status = "Processing Order";
-        $orders->deliver = now()->addDays(0);
+        $orders->processing = now()->addDays(1);
+        $orders->deliver = now()->addDays(1);
         $orders->arrive = now()->addDays(2);
         $orders->payment = now()->addDays(0);
         $orders->save();

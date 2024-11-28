@@ -10,13 +10,14 @@ class AccountOrderDetail extends Model
     /** @use HasFactory<\Database\Factories\AccountOrderDetailFactory> */
     use HasFactory;
 
-    protected $fillable = ['status', 'deliver', 'arrive', 'payment', 'account_id'];
+    protected $fillable = ['status', 'deliver', 'arrive', 'payment', 'processing', 'account_id'];
 
     // Dipake supaya automatically diaggep jadi Carbon sama Laravel dan bukan string
     protected $casts = [
         'payment' => 'datetime',
         'deliver' => 'datetime',
         'arrive' => 'datetime',
+        'processing' => 'datetime',
     ];
 
     public function account()
