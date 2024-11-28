@@ -13,6 +13,9 @@ class OrderDetailController extends Controller
 {
     public function index(){
         $orders = AccountOrderDetail::with('orderDetails')->where('account_id', '=', Auth::id())->get();
+        if(Auth::user()->role == "admin"){
+            $orders = AccountOrderDetail::all();
+        }
         return view('order.order', compact('orders'));
     }
 
@@ -82,5 +85,22 @@ class OrderDetailController extends Controller
     public function track($id){
         $orders = AccountOrderDetail::findOrFail($id);
         return view('order.detail', compact('orders'));
+    }
+
+    public function processDeliver($id){
+        $orders = AccountOrderDetail::findOrFail($id);
+        $orders->status = "Shipping";
+        $orders->processing = now();
+        $orders->deliver = now();
+        $orders->save();
+        return redirect()->route('orders.index');
+    }
+
+    public function completed($id){
+        $orders = AccountOrderDetail::findOrFail($id);
+        $orders->status = "Completed";
+        $orders->arrive = now();
+        $orders->save();
+        return redirect()->route('orders.index');
     }
 }

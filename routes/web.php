@@ -152,6 +152,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/order/summary/{id}', [OrderDetailController::class, 'summary'])->name('orders.summary');
     // Tracking Order yang udh dibayar
     Route::get('/order/track/{id}', [OrderDetailController::class, 'track'])->name('orders.track');
+    // ADMIN PROCESS & DELIVER ORDER
+    Route::post('/order/process/deliver/{id}', [OrderDetailController::class, 'processDeliver'])->name('orders.process.deliver');
+    // ADMIN COMPLETED ORDER
+    Route::post('/order/complete/{id}', [OrderDetailController::class, 'completed'])->name('orders.completed');
 
     // ==================
     // CHATTING ROUTING
