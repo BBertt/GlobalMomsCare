@@ -160,10 +160,7 @@ Route::middleware('auth')->group(function () {
     // ==================
     // CHATTING ROUTING
     // ==================
-    // Get Chat
-    Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
-    // Send Chat
-    Route::post('/chat', [ChatController::class, 'store'])->name('chat.store');
+    
 });
 
 

@@ -26,8 +26,6 @@
         @yield('content')
     </main>
 
-    @include('layouts.chat')
-
     @include('layouts.footer')
 
     {{-- Flowbite JS --}}
