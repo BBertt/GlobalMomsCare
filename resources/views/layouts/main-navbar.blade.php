@@ -38,7 +38,7 @@
                     </li>
                 @endif
                 <li class="nav-item">
-                    <a class="nav-link text-dark fw-semibold mr-3" href="#">Pregnancy Calendar</a>
+                    <a class="nav-link text-dark fw-semibold mr-3" href="{{ route('pregnancy.calendar') }}">Pregnancy Calendar</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-dark fw-semibold mr-3" href="#">Appointments</a>

@@ -7,6 +7,7 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\OrderDetailController;
+use App\Http\Controllers\PregnancyController;
 use App\Http\Controllers\ProductController;
 use App\Models\OrderDetail;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +15,12 @@ use Illuminate\Support\Facades\Route;
 // =============================
 // INI ROUTING UNTUK SEMUA ORANG
 // =============================
+
+Route::get('/pregnancy-calendar', function() { 
+    return view('pregnancy-calendar'); 
+})->name('pregnancy.calendar');
+
+Route::post('/pregnancy-calendar', [PregnancyController::class, 'calculatePregnancy'])->name('pregnancy.calculate');
 
 // ==================
 // HOME ROUTING
