@@ -16,10 +16,10 @@ use Illuminate\Support\Facades\Route;
 // INI ROUTING UNTUK SEMUA ORANG
 // =============================
 
+// Routing Pregnancy Calendars.
 Route::get('/pregnancy-calendar', function() { 
     return view('pregnancy-calendar'); 
 })->name('pregnancy.calendar');
-
 Route::post('/pregnancy-calendar', [PregnancyController::class, 'calculatePregnancy'])->name('pregnancy.calculate');
 
 // ==================
@@ -163,6 +163,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/order/process/deliver/{id}', [OrderDetailController::class, 'processDeliver'])->name('orders.process.deliver');
     // ADMIN COMPLETED ORDER
     Route::post('/order/complete/{id}', [OrderDetailController::class, 'completed'])->name('orders.completed');
+
+    // ==================
+    // APPOINTMENTS ROUTING
+    // ==================
+
+    Route::get('/appointments', function () {
+        return view('appointments');
+    })->name('view.appointments');
 
 });
 

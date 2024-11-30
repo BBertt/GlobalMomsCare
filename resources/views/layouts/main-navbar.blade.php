@@ -41,7 +41,7 @@
                     <a class="nav-link text-dark fw-semibold mr-3" href="{{ route('pregnancy.calendar') }}">Pregnancy Calendar</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark fw-semibold mr-3" href="#">Appointments</a>
+                    <a class="nav-link text-dark fw-semibold mr-3" href="{{ route('view.appointments') }}">Appointments</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-dark fw-semibold mr-3" href="#">About Us</a>
