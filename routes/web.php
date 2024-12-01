@@ -18,9 +18,11 @@ use Illuminate\Support\Facades\Route;
 // =============================
 
 // Routing Pregnancy Calendars.
+
 Route::get('/pregnancy-calendar', function() { 
     return view('pregnancy-calendar'); 
 })->name('pregnancy.calendar');
+
 Route::post('/pregnancy-calendar', [PregnancyController::class, 'calculatePregnancy'])->name('pregnancy.calculate');
 
 // ==================
@@ -170,8 +172,8 @@ Route::middleware('auth')->group(function () {
     // ==================
 
     Route::get('/appointments', [ScheduleController::class, 'index'])->name('view.appointments');
-
     Route::post('/appointments', [ScheduleController::class, 'addAppointments'])->name('add.appointments');
+    Route::delete('/appointments/{id}', [ScheduleController::class, 'deleteAppointments'])->name('delete.appointments');
 
 });
 
