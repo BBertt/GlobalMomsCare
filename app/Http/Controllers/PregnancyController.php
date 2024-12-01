@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 class PregnancyController extends Controller
 {
     public function calculatePregnancy(Request $request) {
+        
         $request->validate([
             'last_period' => 'required|date',
         ]);
@@ -28,7 +29,6 @@ class PregnancyController extends Controller
         if ($pregnancyStageInDays < 0 || $pregnancyStageInDays > 280) { // 280 days = 40 weeks
             return redirect()->back()->withErrors(['last_period' => 'Invalid date: Pregnancy should be within 40 weeks.']);
         }
-
         // Convert days to weeks and days
         $pregnancyWeeks = intdiv($pregnancyStageInDays, 7); // Total full weeks
         $pregnancyDays = $pregnancyStageInDays % 7;         // Remaining days

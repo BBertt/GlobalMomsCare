@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class ScheduleController extends Controller
 {
     public function index() {
-        $schedules = Schedule::where('account_id', Auth::id())->with('hospital')->get();
+        $schedules = Schedule::where('account_id', Auth::id())->with('hospital')->orderBy('date')->get();
 
         return view('appointments', compact('schedules'));
     }
@@ -37,5 +37,26 @@ class ScheduleController extends Controller
             'date' => $request->appointment_date,
         ]);
 
+        return redirect()->back();
+    }
+
+    public function deleteAppointments($schedule_id) {
+        
+        $schedule = Schedule::find($schedule_id);
+
+        // Check if the schedule exists
+        if ($schedule) {
+            // Delete the schedule
+            $schedule->delete();
+        }
+
+        $temp = Schedule::where('hospital_id', $schedule->hospital_id)->first();
+
+        if (!$temp) {
+            $hospital = Hospital::find($schedule->hospital_id);
+            $hospital->delete();
+        }
+
+        return redirect()->back();
     }
 }
