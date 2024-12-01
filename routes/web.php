@@ -9,6 +9,7 @@ use App\Http\Controllers\ForumController;
 use App\Http\Controllers\OrderDetailController;
 use App\Http\Controllers\PregnancyController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ScheduleController;
 use App\Models\OrderDetail;
 use Illuminate\Support\Facades\Route;
 
@@ -168,9 +169,9 @@ Route::middleware('auth')->group(function () {
     // APPOINTMENTS ROUTING
     // ==================
 
-    Route::get('/appointments', function () {
-        return view('appointments');
-    })->name('view.appointments');
+    Route::get('/appointments', [ScheduleController::class, 'index'])->name('view.appointments');
+
+    Route::post('/appointments', [ScheduleController::class, 'addAppointments'])->name('add.appointments');
 
 });
 
