@@ -9,11 +9,14 @@ use Illuminate\Support\Facades\Auth;
 
 class ScheduleController extends Controller
 {
+    // Show appointments page with all the appointments.
     public function index() {
         $schedules = Schedule::where('account_id', Auth::id())->with('hospital')->orderBy('date')->get();
 
         return view('appointments', compact('schedules'));
     }
+
+    // Add new Appointments.
     public function addAppointments(Request $request) {
         $request->validate([
             'hospital_name' => 'required|string|max:255',
@@ -40,13 +43,12 @@ class ScheduleController extends Controller
         return redirect()->back();
     }
 
+    // Delete Appointments.
     public function deleteAppointments($schedule_id) {
         
         $schedule = Schedule::find($schedule_id);
 
-        // Check if the schedule exists
         if ($schedule) {
-            // Delete the schedule
             $schedule->delete();
         }
 

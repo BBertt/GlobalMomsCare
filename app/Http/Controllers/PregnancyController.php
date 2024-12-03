@@ -7,19 +7,18 @@ use Illuminate\Http\Request;
 
 class PregnancyController extends Controller
 {
+    // Calculate Pregnancy details based on last period date.
     public function calculatePregnancy(Request $request) {
         
         $request->validate([
             'last_period' => 'required|date',
         ]);
 
-        // Parse the input last period date
         $lastPeriod = Carbon::parse($request->last_period);
 
         // Calculate the due date (40 weeks from LMP)
         $dueDate = $lastPeriod->copy()->addWeeks(40);
 
-        // Get the current date
         $currentDate = Carbon::now();
 
         // Calculate the pregnancy stage in days
@@ -30,8 +29,8 @@ class PregnancyController extends Controller
             return redirect()->back()->withErrors(['last_period' => 'Invalid date: Pregnancy should be within 40 weeks.']);
         }
         // Convert days to weeks and days
-        $pregnancyWeeks = intdiv($pregnancyStageInDays, 7); // Total full weeks
-        $pregnancyDays = $pregnancyStageInDays % 7;         // Remaining days
+        $pregnancyWeeks = intdiv($pregnancyStageInDays, 7);
+        $pregnancyDays = $pregnancyStageInDays % 7;
 
         // Pass calculated values to the view
         return view('pregnancy-calendar', compact('dueDate', 'pregnancyWeeks', 'pregnancyDays'));
