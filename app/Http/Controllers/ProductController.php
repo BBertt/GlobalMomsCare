@@ -14,9 +14,9 @@ class ProductController extends Controller
     //
     public function index(){
         if(Auth::check() &&  Auth::user()->role=="admin"){
-            $products = Product::all();
+            $products = Product::with(['categories', 'pictures'])->get();
         }else{
-            $products = Product::where('stock', '>', 0)->get();
+            $products = Product::with(['categories', 'pictures'])->where('stock', '>', 0)->get();
         }
         $categories = Category::all();
         return view('product.product', compact('products', 'categories'));
@@ -35,7 +35,7 @@ class ProductController extends Controller
             'description' => 'required',
             'categories' => 'required|array',
             'categories.*' => 'exists:categories,id',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:1500'
         ]);
         $products = Product::create([
             'account_id' => Auth::id(),
@@ -52,10 +52,12 @@ class ProductController extends Controller
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                $path = $image->store('images', 'public');
+                $imageData = file_get_contents($image->getRealPath());
+
                 $picture = Picture::create([
-                    'pictureLink' => $path,
+                    'pictureLink' => $imageData,
                 ]);
+
                 $products->pictures()->attach($picture->id);
             }
         }
@@ -64,7 +66,7 @@ class ProductController extends Controller
     }
 
     public function show($id){
-        $product = Product::findOrFail($id);
+        $product = Product::with(['categories', 'pictures', 'account'])->findOrFail($id);
         return view('product.detail', compact('product'));
     }
 
@@ -75,13 +77,13 @@ class ProductController extends Controller
     }
 
     public function updatePage($id){
-        $product = Product::findOrFail($id);
+        $product = Product::with(['categories', 'pictures', 'account'])->findOrFail($id);
         $categories = Category::all();
         return view('product.update', compact('product', 'categories'));
     }
 
     public function update(Request $request, $id){
-        $product = Product::findOrFail($id);
+        $product = Product::with(['categories', 'pictures', 'account'])->findOrFail($id);
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required',
@@ -89,7 +91,7 @@ class ProductController extends Controller
             'description' => 'required',
             'categories' => 'required|array',
             'categories.*' => 'exists:categories,id',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:1500'
         ]);
         $product->update($validated);
 
@@ -98,10 +100,12 @@ class ProductController extends Controller
         // Handle new images if provided
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                $path = $image->store('images', 'public');
+                $imageData = file_get_contents($image->getRealPath());
+
                 $picture = Picture::create([
-                    'pictureLink' => $path,
+                    'pictureLink' => $imageData,
                 ]);
+
                 $product->pictures()->attach($picture->id);
             }
         }
@@ -114,7 +118,8 @@ class ProductController extends Controller
         $categories = $request->input('categories');
 
         if(Auth::user()->role == "admin"){
-            $products = Product::when($search, function ($query, $search) {
+            $products = Product::with(['categories', 'pictures', 'account'])
+            ->when($search, function ($query, $search) {
             return $query->where('name', 'like', '%' . $search . '%');
             })
             ->when($categories, function ($query, $categories) {
@@ -124,7 +129,8 @@ class ProductController extends Controller
             })
             ->get();
         }else{
-            $products = Product::when($search, function ($query, $search) {
+            $products = Product::with(['categories', 'pictures', 'account'])->
+            when($search, function ($query, $search) {
             return $query->where('name', 'like', '%' . $search . '%');
             })
             ->where('stock', '>', 0)

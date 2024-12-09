@@ -42,15 +42,6 @@ class ArticlePictureSeeder extends Seeder
                 'content' => $faker->paragraph(),
             ]);
 
-            $picture = Picture::create([
-                'pictureLink' => 'articles/' . $i . '.jpg',
-            ]);
-
-            ArticlePicture::create([
-                'article_id' => $article->id,
-                'picture_id' => $picture->id,
-            ]);
-
             ArticleCategory::create([
                 'category_id' => $category->id,
                 'article_id' => $article->id,

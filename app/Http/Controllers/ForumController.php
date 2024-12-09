@@ -12,7 +12,7 @@ class ForumController extends Controller
 {
     //
     public function index(){
-        $forums = Forum::all();
+        $forums = Forum::with(['categories', 'pictures'])->get();
         $categories = Category::all();
         return view('forum.forum', compact('forums', 'categories'));
     }
@@ -32,7 +32,7 @@ class ForumController extends Controller
             'content' => 'required',
             'categories' => 'required|array',
             'categories.*' => 'exists:categories,id',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:1500'
         ]);
 
         $forums = Forum::create([
@@ -48,10 +48,12 @@ class ForumController extends Controller
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                $path = $image->store('images', 'public');
+                $imageData = file_get_contents($image->getRealPath());
+
                 $picture = Picture::create([
-                    'pictureLink' => $path,
+                    'pictureLink' => $imageData,
                 ]);
+
                 $forums->pictures()->attach($picture->id);
             }
         }
@@ -64,7 +66,8 @@ class ForumController extends Controller
         $search = $request->input('search');
         $categories = $request->input('categories');
 
-        $forums = Forum::when($search, function ($query, $search) {
+        $forums = Forum::with(['categories', 'pictures'])
+        ->when($search, function ($query, $search) {
             return $query->where('title', 'like', '%' . $search . '%');
         })
         ->when($categories, function ($query, $categories) {
@@ -81,7 +84,7 @@ class ForumController extends Controller
     }
 
     public function show($id){
-        $forum = Forum::with(['comments', 'pictures', 'account'])->findOrFail($id);
+        $forum = Forum::with(['comments.account', 'pictures', 'account'])->findOrFail($id);
         return view('forum.detail', compact('forum'));
     }
 
@@ -92,19 +95,19 @@ class ForumController extends Controller
     }
 
     public function updatePage($id){
-        $forum = Forum::findOrFail($id);
+        $forum = Forum::with(['categories', 'pictures'])->findOrFail($id);
         $categories = Category::all();
         return view('forum.update', compact('forum', 'categories'));
     }
 
     public function update(Request $request, $id){
-        $forum = Forum::findOrFail($id);
+        $forum = Forum::with(['categories', 'pictures'])->findOrFail($id);
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required',
             'categories' => 'required|array',
             'categories.*' => 'exists:categories,id',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:1500'
         ]);
         $forum->update($validated);
 
@@ -113,10 +116,12 @@ class ForumController extends Controller
         // Handle new images if provided
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                $path = $image->store('images', 'public');
+                $imageData = file_get_contents($image->getRealPath());
+
                 $picture = Picture::create([
-                    'pictureLink' => $path,
+                    'pictureLink' => $imageData,
                 ]);
+
                 $forum->pictures()->attach($picture->id);
             }
         }
