@@ -65,4 +65,8 @@ class Account extends Authenticatable
     {
         return $this->hasMany(Schedule::class);
     }
+    public function professionalSchedules()
+    {
+        return $this->hasMany(Schedule::class, 'professional_id');
+    }
 }
