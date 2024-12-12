@@ -12,8 +12,15 @@ class ScheduleController extends Controller
 {
     // Show appointments page with all the appointments.
     public function index() {
-        $schedules = Schedule::where('account_id', Auth::id())->with('account', 'professional')->orderBy('date')->get();
         $account = Account::where('id', Auth::id())->first();
+
+        if ($account->role == "professional") {
+            $schedules = Schedule::where('professional_id', Auth::id())->with('account', 'professional')->orderBy('date')->get();
+            $professionals = Account::where('role', 'professional')->get();
+            return view('appointments.index', compact('schedules', 'account', 'professionals'));
+        }
+
+        $schedules = Schedule::where('account_id', Auth::id())->with('account', 'professional')->orderByRaw("FIELD(status, 'Accepted', 'Pending', 'Denied')")->orderBy('date')->get();
         $professionals = Account::where('role', 'professional')->get();
         return view('appointments.index', compact('schedules', 'account', 'professionals'));
     }
@@ -45,6 +52,26 @@ class ScheduleController extends Controller
         if ($schedule) {
             $schedule->delete();
         }
+
+        return redirect()->back();
+    }
+
+    // Professional can accept appointments.
+    public function acceptAppointments($schedule_id) {
+        $schedule = Schedule::find($schedule_id);
+
+        $schedule->status = 'Accepted';
+        $schedule->save();
+
+        return redirect()->back();
+    }
+
+    // Professional can deny appointments.
+    public function denyAppointments($schedule_id) {
+        $schedule = Schedule::find($schedule_id);
+
+        $schedule->status = 'Denied';
+        $schedule->save();
 
         return redirect()->back();
     }

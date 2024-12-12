@@ -4,7 +4,7 @@
 
 @section('content')
 
-@if ($account->role == 'user')
+@if ($account->role == 'user' || $account->role == 'admin')
     @include('appointments.user')
 
 @elseif ($account->role == 'professional')
