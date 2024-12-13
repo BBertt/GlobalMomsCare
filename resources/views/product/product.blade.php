@@ -6,7 +6,7 @@
     <div class="bg-white">
         <div class="mx-auto max-w-2xl px-4 pb-8 pt-2 sm:px-6 sm:py-16 lg:max-w-7xl lg:px-8">
             <div>
-                <section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
+                <section class="flex justify-between bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
                   <div class="mx-auto grid max-w-screen-xl px-4 pb-8 md:grid-cols-12 lg:gap-12 lg:pb-16 xl:gap-0">
                     <div class="content-center justify-self-start items-center md:col-span-7 md:text-start">
                       <h1 class="mt-20 mb-4 text-4xl font-extrabold leading-none tracking-tight dark:text-white md:max-w-2xl md:text-5xl xl:text-6xl">Effortless Shopping for Busy Moms!</h1>
